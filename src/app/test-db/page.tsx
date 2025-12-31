@@ -17,6 +17,11 @@ export default function TestDBPage() {
 
       // Check 2: Test query
       try {
+        if (!supabase) {
+          setStatus("❌ Supabase client is null");
+          return;
+        }
+
         const { data, error } = await supabase
           .from('gallery_images')
           .select('*')
