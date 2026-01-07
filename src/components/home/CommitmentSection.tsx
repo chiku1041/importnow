@@ -59,10 +59,6 @@ export function CommitmentSection() {
             Our Commitment:{" "}
             <span className="text-[#0B1F33]">Making Imports Simple and Reliable</span>
           </h2>
-          <p className="text-lg text-[#666666]">
-            Many importers waste time and money dealing with fraud, unclear pricing, 
-            multiple parties, and operational headaches. We exist to change that.
-          </p>
         </div>
 
         {/* Description */}
@@ -71,9 +67,8 @@ export function CommitmentSection() {
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          <p className="text-[#666666]">
-            ImportNow provides structured, end-to-end support with full transparency — 
-            reducing risks, saving your time, and eliminating cost surprises.
+          <p className="text-lg text-[#666666]">
+            Many importers lose time and money to fraud, unclear pricing, too many middlemen, and messy operations. ImportNow fixes this by offering clear, end to end support with full transparency so risks drop, time is saved, and cost surprises disappear.
           </p>
         </div>
 

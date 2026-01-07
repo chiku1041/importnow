@@ -4,7 +4,6 @@ import { PartnersSection } from "@/components/home/PartnersSection";
 import { ExperienceSection } from "@/components/home/ExperienceSection";
 import { GallerySection } from "@/components/home/GallerySection";
 import { OnePriceSection } from "@/components/home/OnePriceSection";
-import { LogosSection } from "@/components/home/LogosSection";
 import { CTASection } from "@/components/home/CTASection";
 
 export default function HomePage() {
@@ -22,7 +21,6 @@ export default function HomePage() {
       <ExperienceSection />
       <GallerySection />
       <OnePriceSection />
-      <LogosSection />
       <CTASection />
     </>
   );

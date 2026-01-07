@@ -1,6 +1,5 @@
 "use client";
 
-import { Camera } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { supabase } from "@/lib/supabase";
@@ -141,15 +140,6 @@ export function GallerySection() {
     <section ref={sectionRef} className="bg-white section-padding overflow-hidden">
       <div className="container-custom mb-10">
         <div className="max-w-3xl mx-auto text-center">
-          <div
-            className={`inline-flex items-center gap-2 px-4 py-2 bg-[#F5F7FA] rounded-full mb-4 transition-all duration-700 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-            }`}
-          >
-            <Camera className="h-5 w-5 text-[#0B1F33]" />
-            <span className="text-sm font-medium text-[#0B1F33]">Our Work in Action</span>
-          </div>
-          
           <h2
             className={`text-3xl md:text-4xl font-bold text-[#1F2933] mb-4 transition-all duration-700 delay-100 ${
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
@@ -203,12 +193,6 @@ export function GallerySection() {
                   />
                 </div>
 
-                {/* Content */}
-                <div className="absolute inset-0 flex flex-col justify-end p-6 bg-gradient-to-t from-black/50 to-transparent">
-                  <h3 className="text-white font-semibold text-lg">{image.title}</h3>
-                  <p className="text-white/80 text-sm">{image.description}</p>
-                </div>
-
                 {/* Hover Overlay */}
                 <div className="absolute inset-0 bg-[#0B1F33]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
@@ -239,12 +223,6 @@ export function GallerySection() {
                     />
                   </div>
 
-                  {/* Content */}
-                  <div className="absolute inset-0 flex flex-col justify-end p-6 bg-gradient-to-t from-black/50 to-transparent">
-                    <h3 className="text-white font-semibold text-lg">{image.title}</h3>
-                    <p className="text-white/80 text-sm">{image.description}</p>
-                  </div>
-
                   {/* Hover Overlay */}
                   <div className="absolute inset-0 bg-[#0B1F33]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
@@ -265,17 +243,15 @@ export function GallerySection() {
                   fill
                   className="object-cover"
                   sizes="(max-width: 768px) 288px, 320px"
-                  onError={() => {
-                    console.warn(`Failed to load image: ${image.image_url}`);
+                  unoptimized
+                  onError={(e) => {
+                    // Silently handle image loading errors
+                    if (process.env.NODE_ENV === 'development') {
+                      console.warn(`Failed to load image: ${image.image_url}`);
+                    }
                     setFailedImages(prev => new Set(prev).add(image.id));
                   }}
                 />
-                
-                {/* Content Overlay */}
-                <div className="absolute inset-0 flex flex-col justify-end p-6 bg-gradient-to-t from-black/70 via-black/30 to-transparent">
-                  <h3 className="text-white font-semibold text-lg">{image.title}</h3>
-                  <p className="text-white/90 text-sm">{image.description}</p>
-                </div>
 
                 {/* Hover Overlay */}
                 <div className="absolute inset-0 bg-[#0B1F33]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

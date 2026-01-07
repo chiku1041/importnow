@@ -80,7 +80,7 @@
   --color-border-accent: var(--secondary);
   
   /* Typography */
-  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-sans: var(--font-inter), "Inter", system-ui, -apple-system, sans-serif;
   
   /* Animation keyframes */
   --animate-fade-in: fade-in 0.4s ease-out forwards;
@@ -150,6 +150,15 @@
   }
   50% {
     transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(11, 31, 51, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(11, 31, 51, 0);
   }
 }
 
@@ -337,3 +346,53 @@ body {
 .duration-400 {
   transition-duration: 400ms;
 }
+
+/* Pulse Glow Animation */
+.animate-pulse-glow {
+  animation: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* OnePrice Landing Page Styles */
+:root {
+  --oneprice-navy: #0f172a;
+  --oneprice-navy-light: #1e293b;
+  --oneprice-accent: #e07a3d;
+  --oneprice-accent-hover: #d16a2d;
+  --oneprice-accent-soft: rgba(224, 122, 61, 0.1);
+  --oneprice-bg-primary: #ffffff;
+  --oneprice-bg-secondary: #f8fafc;
+  --oneprice-bg-tertiary: #f1f5f9;
+  --oneprice-text-primary: #0f172a;
+  --oneprice-text-secondary: #475569;
+  --oneprice-text-tertiary: #94a3b8;
+  --oneprice-border: #e2e8f0;
+  --oneprice-border-light: #f1f5f9;
+  --oneprice-success: #10b981;
+  --oneprice-success-soft: rgba(16, 185, 129, 0.1);
+}
+
+/* Ensure Inter font is applied */
+.font-sans {
+  font-family: var(--font-inter), "Inter", system-ui, -apple-system, sans-serif;
+}
+
+/* Animation Base States */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.animate-on-scroll.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger delays for cards */
+.stagger-1 { transition-delay: 0.05s; }
+.stagger-2 { transition-delay: 0.1s; }
+.stagger-3 { transition-delay: 0.15s; }
+.stagger-4 { transition-delay: 0.2s; }
+.stagger-5 { transition-delay: 0.25s; }
+.stagger-6 { transition-delay: 0.3s; }

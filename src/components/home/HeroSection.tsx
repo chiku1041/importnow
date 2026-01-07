@@ -115,6 +115,7 @@ export function HeroSection({
                 width={58}
                 height={38}
                 className="rounded-sm object-cover shadow-md"
+                style={{ width: "auto", height: "auto" }}
               />
               <Image
                 src="/flag-india.png"
@@ -122,6 +123,7 @@ export function HeroSection({
                 width={58}
                 height={38}
                 className="rounded-sm object-cover shadow-md"
+                style={{ width: "auto", height: "auto" }}
               />
             </div>
             <h1 className="font-black text-black leading-tight tracking-tight">

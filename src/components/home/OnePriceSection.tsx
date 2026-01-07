@@ -44,9 +44,9 @@ export function OnePriceSection() {
           <div className="grid lg:grid-cols-2 gap-10 items-center">
             {/* Content */}
             <div>
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#F5F7FA] rounded-full mb-6">
-                <Package className="h-5 w-5 text-[#0B1F33]" />
-                <span className="text-sm font-semibold text-[#0B1F33]">New Service</span>
+              <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-[#0B1F33] to-[#1F3A5F] rounded-full mb-6 shadow-lg animate-pulse-glow">
+                <Package className="h-5 w-5 text-white" />
+                <span className="text-sm font-bold text-white tracking-wide">New Service</span>
               </div>
 
               <h2 className="text-3xl md:text-4xl font-bold text-[#1F2933] mb-4">
@@ -103,7 +103,7 @@ export function OnePriceSection() {
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-4 bg-[#0B1F33] text-white px-4 py-2 rounded-full text-sm font-medium shadow-lg">
                   All-inclusive
                 </div>
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-4 bg-[#1F3A5F] text-[#1F2933] px-4 py-2 rounded-full text-sm font-medium shadow-lg">
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-4 bg-[#1F3A5F] text-white px-4 py-2 rounded-full text-sm font-medium shadow-lg">
                   No hidden costs
                 </div>
                 <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 bg-white border-2 border-[#0B1F33] text-[#0B1F33] px-4 py-2 rounded-full text-sm font-medium shadow-lg">

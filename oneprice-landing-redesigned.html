@@ -1,0 +1,2020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnePrice by ImportNow - Simplified Importing for Small Shipments</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0f172a;
+            --navy-light: #1e293b;
+            --accent: #e07a3d;
+            --accent-hover: #d16a2d;
+            --accent-soft: rgba(224, 122, 61, 0.1);
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #f1f5f9;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-tertiary: #94a3b8;
+            --border: #e2e8f0;
+            --border-light: #f1f5f9;
+            --success: #10b981;
+            --success-soft: rgba(16, 185, 129, 0.1);
+            --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04);
+            --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.06);
+            --shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.08);
+            --shadow-xl: 0 24px 48px rgba(15, 23, 42, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            color: var(--text-primary);
+            line-height: 1.6;
+            background: var(--bg-primary);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Animation Base States */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), 
+                        transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Stagger delays for cards */
+        .stagger-1 { transition-delay: 0.05s; }
+        .stagger-2 { transition-delay: 0.1s; }
+        .stagger-3 { transition-delay: 0.15s; }
+        .stagger-4 { transition-delay: 0.2s; }
+        .stagger-5 { transition-delay: 0.25s; }
+        .stagger-6 { transition-delay: 0.3s; }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 0.875rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .nav-logo {
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--navy);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.875rem;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--text-primary);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 500;
+            font-size: 0.9375rem;
+            text-decoration: none;
+            transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+            cursor: pointer;
+            border: none;
+            letter-spacing: -0.01em;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 2px 8px rgba(224, 122, 61, 0.25);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(224, 122, 61, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-tertiary);
+            transform: translateY(-2px);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-secondary);
+        }
+
+        .btn-ghost:hover {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 9rem 2rem 6rem;
+            background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            overflow: hidden;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.625rem;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            padding: 0.375rem 0.875rem 0.375rem 0.5rem;
+            border-radius: 100px;
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .hero-badge .new {
+            background: var(--accent);
+            color: white;
+            padding: 0.125rem 0.5rem;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 0.6875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--navy);
+            margin-bottom: 1.25rem;
+            letter-spacing: -0.03em;
+        }
+
+        .hero-title .highlight {
+            background: linear-gradient(135deg, var(--accent) 0%, #f5a366 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.125rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            max-width: 480px;
+            line-height: 1.7;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .hero-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.25rem;
+        }
+
+        .hero-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .check-icon {
+            width: 18px;
+            height: 18px;
+            color: var(--success);
+            flex-shrink: 0;
+        }
+
+        /* Hero Visual - Pricing Card */
+        .hero-visual {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .pricing-card {
+            background: var(--bg-primary);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--shadow-xl);
+            border: 1px solid var(--border-light);
+            max-width: 380px;
+            width: 100%;
+        }
+
+        .pricing-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.25rem;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .pricing-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--accent) 0%, #f5a366 100%);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .pricing-title {
+            font-weight: 600;
+            font-size: 1.125rem;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+        }
+
+        .pricing-subtitle {
+            font-size: 0.8125rem;
+            color: var(--text-tertiary);
+            margin-top: 0.125rem;
+        }
+
+        .pricing-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.875rem 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .pricing-row:last-of-type {
+            border-bottom: none;
+        }
+
+        .pricing-label {
+            color: var(--text-secondary);
+            font-size: 0.9375rem;
+        }
+
+        .pricing-value {
+            color: var(--success);
+            font-weight: 500;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+        }
+
+        .pricing-total {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid var(--navy);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .pricing-total-label {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .pricing-total-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: -0.02em;
+        }
+
+        .pricing-note {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            padding: 0.75rem;
+            background: var(--success-soft);
+            border-radius: 10px;
+            font-size: 0.8125rem;
+            color: var(--success);
+            font-weight: 500;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 6rem 2rem;
+        }
+
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .section-badge {
+            display: inline-block;
+            background: var(--accent-soft);
+            color: var(--accent);
+            padding: 0.375rem 1rem;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 0.8125rem;
+            margin-bottom: 1rem;
+            letter-spacing: 0.02em;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.875rem;
+            letter-spacing: -0.03em;
+        }
+
+        .section-subtitle {
+            font-size: 1.0625rem;
+            color: var(--text-secondary);
+            max-width: 560px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* Audience Section */
+        .audience-section {
+            background: var(--bg-secondary);
+        }
+
+        .audience-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.25rem;
+        }
+
+        .audience-card {
+            background: var(--bg-primary);
+            border-radius: 16px;
+            padding: 1.75rem;
+            text-align: center;
+            border: 1px solid var(--border-light);
+            transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .audience-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: transparent;
+        }
+
+        .audience-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--accent-soft);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.25rem;
+            color: var(--accent);
+        }
+
+        .audience-card h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.01em;
+        }
+
+        .audience-card p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Not For Banner */
+        .not-for-banner {
+            background: var(--navy);
+            border-radius: 16px;
+            padding: 1.75rem 2rem;
+            margin-top: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+
+        .not-for-content {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        .not-for-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .not-for-text h4 {
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.01em;
+        }
+
+        .not-for-text p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.875rem;
+        }
+
+        .not-for-banner .btn {
+            background: white;
+            color: var(--navy);
+            flex-shrink: 0;
+        }
+
+        .not-for-banner .btn:hover {
+            background: var(--bg-secondary);
+        }
+
+        /* Benefits Grid */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .benefit-card {
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid var(--border-light);
+            background: var(--bg-primary);
+            transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .benefit-card:hover {
+            box-shadow: var(--shadow-lg);
+            border-color: transparent;
+            transform: translateY(-4px);
+        }
+
+        .benefit-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--accent-soft);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            margin-bottom: 1.25rem;
+        }
+
+        .benefit-card h3 {
+            font-size: 1.0625rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.625rem;
+            letter-spacing: -0.01em;
+        }
+
+        .benefit-card p {
+            color: var(--text-secondary);
+            font-size: 0.9375rem;
+            line-height: 1.7;
+        }
+
+        /* How It Works */
+        .how-section {
+            background: var(--bg-secondary);
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+            position: relative;
+        }
+
+        .steps-grid::before {
+            content: '';
+            position: absolute;
+            top: 36px;
+            left: 72px;
+            right: 72px;
+            height: 2px;
+            background: var(--border);
+        }
+
+        .step-card {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 72px;
+            height: 72px;
+            background: var(--bg-primary);
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.25rem;
+            font-size: 1.375rem;
+            font-weight: 700;
+            color: var(--accent);
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+
+        .step-card:hover .step-number {
+            background: var(--accent);
+            color: white;
+        }
+
+        .step-card h3 {
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.01em;
+        }
+
+        .step-card p {
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            padding: 0 0.5rem;
+        }
+
+        /* Tracking Section */
+        .tracking-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .tracking-content h2 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            letter-spacing: -0.03em;
+        }
+
+        .tracking-content > p {
+            color: var(--text-secondary);
+            font-size: 1.0625rem;
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .tracking-features {
+            display: flex;
+            flex-direction: column;
+            gap: 0.625rem;
+        }
+
+        .tracking-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            background: var(--bg-secondary);
+            border-radius: 10px;
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .tracking-visual {
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            padding: 1.5rem;
+        }
+
+        .tracking-card {
+            background: var(--bg-primary);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .tracking-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .tracking-title {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .tracking-id {
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+            background: var(--bg-secondary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 100px;
+            font-weight: 500;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 1.75rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border-light);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 0.875rem;
+        }
+
+        .timeline-item:last-child {
+            padding-bottom: 0;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -1.75rem;
+            top: 2px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--bg-primary);
+            border: 2px solid var(--border);
+            z-index: 1;
+        }
+
+        .timeline-item.done .timeline-dot {
+            background: var(--success);
+            border-color: var(--success);
+        }
+
+        .timeline-item.active .timeline-dot {
+            background: var(--accent);
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(224, 122, 61, 0.15);
+        }
+
+        .timeline-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .timeline-text {
+            font-size: 0.8125rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .timeline-item.pending .timeline-text {
+            color: var(--text-tertiary);
+        }
+
+        .timeline-date {
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+        }
+
+        /* Countries Section */
+        .countries-section {
+            background: var(--bg-secondary);
+        }
+
+        .countries-grid {
+            display: flex;
+            justify-content: center;
+            gap: 1.25rem;
+            flex-wrap: wrap;
+        }
+
+        .country-card {
+            background: var(--bg-primary);
+            border-radius: 14px;
+            padding: 1.125rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border: 1px solid var(--border-light);
+            transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .country-card.available {
+            border-color: var(--success);
+        }
+
+        .country-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .country-flag {
+            font-size: 1.625rem;
+        }
+
+        .country-info h4 {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.9375rem;
+            letter-spacing: -0.01em;
+        }
+
+        .country-status {
+            font-size: 0.6875rem;
+            font-weight: 600;
+            padding: 0.1875rem 0.5rem;
+            border-radius: 100px;
+            margin-top: 0.25rem;
+            display: inline-block;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+        }
+
+        .status-live {
+            background: var(--success-soft);
+            color: var(--success);
+        }
+
+        .status-soon {
+            background: var(--bg-tertiary);
+            color: var(--text-tertiary);
+        }
+
+        /* Pricing CTA */
+        .pricing-cta {
+            max-width: 560px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .pricing-cta-box {
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            padding: 2.5rem;
+            border: 1px solid var(--border-light);
+        }
+
+        .pricing-cta-box h3 {
+            font-size: 1.375rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 1.25rem 0 0.75rem;
+            letter-spacing: -0.02em;
+        }
+
+        .pricing-cta-box p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            font-size: 0.9375rem;
+        }
+
+        .pricing-limits {
+            margin-top: 1.75rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .pricing-limit {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        /* FAQ */
+        .faq-grid {
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            border: 1px solid var(--border-light);
+            border-radius: 14px;
+            margin-bottom: 0.75rem;
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+
+        .faq-item:hover {
+            border-color: var(--border);
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg-primary);
+            border: none;
+            cursor: pointer;
+            text-align: left;
+            font-family: inherit;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+        }
+
+        .faq-question svg {
+            transition: transform 0.3s ease;
+            color: var(--text-tertiary);
+            flex-shrink: 0;
+        }
+
+        .faq-item.active .faq-question svg {
+            transform: rotate(180deg);
+            color: var(--accent);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+        }
+
+        .faq-answer-content {
+            padding: 0 1.5rem 1.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9375rem;
+            line-height: 1.7;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: var(--navy);
+            text-align: center;
+            padding: 5rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 30% 70%, rgba(224, 122, 61, 0.12) 0%, transparent 50%);
+        }
+
+        .cta-container {
+            position: relative;
+            z-index: 1;
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        .cta-icon {
+            width: 64px;
+            height: 64px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: var(--accent);
+        }
+
+        .cta-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+            letter-spacing: -0.03em;
+        }
+
+        .cta-subtitle {
+            font-size: 1.0625rem;
+            color: rgba(255, 255, 255, 0.65);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .cta-buttons .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .cta-buttons .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+
+        .cta-note {
+            margin-top: 1.5rem;
+            font-size: 0.8125rem;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--navy);
+            padding: 3rem 2rem 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .footer-logo {
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: white;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .footer-logo span {
+            color: var(--accent);
+        }
+
+        .footer-desc {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.875rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .footer-contact {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .footer-contact a {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.2s ease;
+        }
+
+        .footer-contact a:hover {
+            color: white;
+        }
+
+        .footer-column h4 {
+            color: white;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            letter-spacing: -0.01em;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 2rem auto 0;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-copyright {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.8125rem;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .footer-social a {
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.5);
+            transition: all 0.2s ease;
+        }
+
+        .footer-social a:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-subtitle {
+                margin: 0 auto 2rem;
+            }
+
+            .hero-cta,
+            .hero-features {
+                justify-content: center;
+            }
+
+            .hero-visual {
+                justify-content: center;
+            }
+
+            .pricing-card {
+                margin: 2rem auto 0;
+            }
+
+            .audience-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .benefits-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .steps-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1.5rem;
+            }
+
+            .steps-grid::before {
+                display: none;
+            }
+
+            .tracking-container {
+                grid-template-columns: 1fr;
+            }
+
+            .not-for-banner {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .not-for-content {
+                flex-direction: column;
+            }
+
+            .footer-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 7rem 1.25rem 3.5rem;
+            }
+
+            .hero-title {
+                font-size: 2.25rem;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+            }
+
+            .hero-cta .btn {
+                width: 100%;
+            }
+
+            section {
+                padding: 4rem 1.25rem;
+            }
+
+            .section-title {
+                font-size: 1.875rem;
+            }
+
+            .audience-grid,
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .steps-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .countries-grid {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .country-card {
+                width: 100%;
+                max-width: 280px;
+            }
+
+            .cta-title {
+                font-size: 1.875rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .cta-buttons .btn {
+                width: 100%;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            padding: 0.5rem;
+            cursor: pointer;
+            color: var(--text-primary);
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <a href="/" class="nav-logo">IMPORT<span>NOW</span></a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/about">About Us</a>
+            <a href="/services">Services</a>
+            <a href="/oneprice" class="active">OnePrice</a>
+            <a href="/faq">FAQ</a>
+            <a href="/blog">Blog</a>
+            <a href="/contact">Contact</a>
+            <a href="/quote" class="btn btn-primary">Get a Free Quote</a>
+        </div>
+        <button class="mobile-menu-btn" aria-label="Menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+        </button>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge animate-on-scroll">
+                    <span class="new">New</span>
+                    Introducing OnePrice by ImportNow
+                </div>
+                <h1 class="hero-title animate-on-scroll">Import Simplified.<br><span class="highlight">One Price. Zero Hassle.</span></h1>
+                <p class="hero-subtitle animate-on-scroll">Skip the complexity. Get a fixed per-kg rate for your small shipments—no negotiations, no surprises, no middlemen. Just sign up, ship, and track.</p>
+                <div class="hero-cta animate-on-scroll">
+                    <a href="/signup" class="btn btn-primary">Sign Up for OnePrice</a>
+                    <a href="#how-it-works" class="btn btn-secondary">See How It Works</a>
+                </div>
+                <div class="hero-features animate-on-scroll">
+                    <div class="hero-feature">
+                        <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        No minimum order
+                    </div>
+                    <div class="hero-feature">
+                        <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        Self-service platform
+                    </div>
+                    <div class="hero-feature">
+                        <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        Best-in-class rates
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="pricing-card animate-on-scroll">
+                    <div class="pricing-header">
+                        <div class="pricing-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M12 6v6l4 2"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="pricing-title">OnePrice Quote</div>
+                            <div class="pricing-subtitle">All-inclusive pricing</div>
+                        </div>
+                    </div>
+                    <div class="pricing-row">
+                        <span class="pricing-label">Shipping from Warehouse</span>
+                        <span class="pricing-value">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            Included
+                        </span>
+                    </div>
+                    <div class="pricing-row">
+                        <span class="pricing-label">Customs & Duties</span>
+                        <span class="pricing-value">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            Included
+                        </span>
+                    </div>
+                    <div class="pricing-row">
+                        <span class="pricing-label">Doorstep Delivery</span>
+                        <span class="pricing-value">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            Included
+                        </span>
+                    </div>
+                    <div class="pricing-row">
+                        <span class="pricing-label">Tracking & Updates</span>
+                        <span class="pricing-value">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            Included
+                        </span>
+                    </div>
+                    <div class="pricing-total">
+                        <span class="pricing-total-label">Total</span>
+                        <span class="pricing-total-value">One Simple Price</span>
+                    </div>
+                    <div class="pricing-note">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        No hidden fees. Ever.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Audience Section -->
+    <section class="audience-section">
+        <div class="section-container">
+            <div class="section-header animate-on-scroll">
+                <span class="section-badge">Perfect For You</span>
+                <h2 class="section-title">Who Is OnePrice For?</h2>
+                <p class="section-subtitle">Designed for importers who want simplicity without the complexity of traditional freight forwarding</p>
+            </div>
+            <div class="audience-grid">
+                <div class="audience-card animate-on-scroll stagger-1">
+                    <div class="audience-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                            <path d="M2 17l10 5 10-5"></path>
+                            <path d="M2 12l10 5 10-5"></path>
+                        </svg>
+                    </div>
+                    <h3>First-Time Importers</h3>
+                    <p>Testing the waters with your first import? Start small without the steep learning curve.</p>
+                </div>
+                <div class="audience-card animate-on-scroll stagger-2">
+                    <div class="audience-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"></path>
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <path d="M16 10a4 4 0 01-8 0"></path>
+                        </svg>
+                    </div>
+                    <h3>Small Resellers</h3>
+                    <p>Instagram sellers, marketplace vendors, and small e-commerce stores sourcing products.</p>
+                </div>
+                <div class="audience-card animate-on-scroll stagger-3">
+                    <div class="audience-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                    </div>
+                    <h3>D2C Brands</h3>
+                    <p>Testing new products or ordering samples before committing to larger volumes.</p>
+                </div>
+                <div class="audience-card animate-on-scroll stagger-4">
+                    <div class="audience-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </div>
+                    <h3>Personal Imports</h3>
+                    <p>Ordering products for personal use without dealing with freight forwarders.</p>
+                </div>
+            </div>
+            <div class="not-for-banner animate-on-scroll">
+                <div class="not-for-content">
+                    <div class="not-for-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
+                    </div>
+                    <div class="not-for-text">
+                        <h4>Need bulk imports, customization, or full container loads?</h4>
+                        <p>Our full-service ImportNow team handles complex requirements with personalized support.</p>
+                    </div>
+                </div>
+                <a href="/services" class="btn">Explore Full Services →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits-section">
+        <div class="section-container">
+            <div class="section-header animate-on-scroll">
+                <span class="section-badge">Why OnePrice</span>
+                <h2 class="section-title">How OnePrice Helps You</h2>
+                <p class="section-subtitle">We've stripped away the complexity so you can focus on your business</p>
+            </div>
+            <div class="benefits-grid">
+                <div class="benefit-card animate-on-scroll stagger-1">
+                    <div class="benefit-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="1" x2="12" y2="23"></line>
+                            <path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"></path>
+                        </svg>
+                    </div>
+                    <h3>Fixed Per-KG Pricing</h3>
+                    <p>Know your exact cost upfront. Our all-inclusive per-kg rate covers shipping, customs, and delivery—no surprise charges.</p>
+                </div>
+                <div class="benefit-card animate-on-scroll stagger-2">
+                    <div class="benefit-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                    </div>
+                    <h3>Faster Transit Times</h3>
+                    <p>Our optimized routes and consolidated shipping means your products reach you faster than traditional forwarding.</p>
+                </div>
+                <div class="benefit-card animate-on-scroll stagger-3">
+                    <div class="benefit-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path>
+                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                        </svg>
+                    </div>
+                    <h3>100% Self-Service</h3>
+                    <p>No back-and-forth emails or calls. Sign up, get addresses, ship—all from your dashboard, any time.</p>
+                </div>
+                <div class="benefit-card animate-on-scroll stagger-4">
+                    <div class="benefit-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                            <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                    </div>
+                    <h3>Real-Time Tracking</h3>
+                    <p>Know exactly where your shipment is at every step—from warehouse acceptance to doorstep delivery with accurate ETAs.</p>
+                </div>
+                <div class="benefit-card animate-on-scroll stagger-5">
+                    <div class="benefit-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"></path>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                        </svg>
+                    </div>
+                    <h3>No Minimum Order</h3>
+                    <p>Whether it's 1 kg or 50 kg, OnePrice works for you. Perfect for samples and small test batches.</p>
+                </div>
+                <div class="benefit-card animate-on-scroll stagger-6">
+                    <div class="benefit-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"></path>
+                        </svg>
+                    </div>
+                    <h3>Customs Handled</h3>
+                    <p>Don't worry about paperwork. We handle customs clearance at both origin and destination—it's all included.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-section" id="how-it-works">
+        <div class="section-container">
+            <div class="section-header animate-on-scroll">
+                <span class="section-badge">Simple Process</span>
+                <h2 class="section-title">How OnePrice Works</h2>
+                <p class="section-subtitle">Five simple steps from signup to delivery</p>
+            </div>
+            <div class="steps-grid">
+                <div class="step-card animate-on-scroll stagger-1">
+                    <div class="step-number">1</div>
+                    <h3>Sign Up</h3>
+                    <p>Create your OnePrice account with email or phone in under a minute.</p>
+                </div>
+                <div class="step-card animate-on-scroll stagger-2">
+                    <div class="step-number">2</div>
+                    <h3>Get Warehouse Address</h3>
+                    <p>Access your dedicated warehouse addresses in China and other locations.</p>
+                </div>
+                <div class="step-card animate-on-scroll stagger-3">
+                    <div class="step-number">3</div>
+                    <h3>Share with Supplier</h3>
+                    <p>Give your supplier the OnePrice warehouse address to ship your products.</p>
+                </div>
+                <div class="step-card animate-on-scroll stagger-4">
+                    <div class="step-number">4</div>
+                    <h3>Enter Tracking</h3>
+                    <p>Input the local tracking number from your supplier to monitor progress.</p>
+                </div>
+                <div class="step-card animate-on-scroll stagger-5">
+                    <div class="step-number">5</div>
+                    <h3>Receive at Doorstep</h3>
+                    <p>We handle everything else—customs, shipping, and delivery to your address.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tracking Section -->
+    <section class="tracking-section">
+        <div class="section-container">
+            <div class="tracking-container">
+                <div class="tracking-content animate-on-scroll">
+                    <span class="section-badge">Full Visibility</span>
+                    <h2>Track Every Step of Your Shipment</h2>
+                    <p>Never wonder where your products are. Our real-time tracking gives you complete visibility from warehouse to doorstep with accurate ETAs.</p>
+                    <div class="tracking-features">
+                        <div class="tracking-feature">
+                            <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            Real-time status updates
+                        </div>
+                        <div class="tracking-feature">
+                            <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            Accurate estimated arrival dates
+                        </div>
+                        <div class="tracking-feature">
+                            <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            Customs clearance notifications
+                        </div>
+                        <div class="tracking-feature">
+                            <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            Last-mile delivery tracking
+                        </div>
+                    </div>
+                </div>
+                <div class="tracking-visual animate-on-scroll">
+                    <div class="tracking-card">
+                        <div class="tracking-header">
+                            <span class="tracking-title">Shipment Progress</span>
+                            <span class="tracking-id">OP-2026-78432</span>
+                        </div>
+                        <div class="timeline">
+                            <div class="timeline-item done">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-content">
+                                    <span class="timeline-text">Accepted by OnePrice Warehouse</span>
+                                    <span class="timeline-date">Jan 2</span>
+                                </div>
+                            </div>
+                            <div class="timeline-item done">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-content">
+                                    <span class="timeline-text">Ready to Dispatch</span>
+                                    <span class="timeline-date">Jan 3</span>
+                                </div>
+                            </div>
+                            <div class="timeline-item done">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-content">
+                                    <span class="timeline-text">Origin Customs Cleared</span>
+                                    <span class="timeline-date">Jan 4</span>
+                                </div>
+                            </div>
+                            <div class="timeline-item active">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-content">
+                                    <span class="timeline-text">In Transit to India</span>
+                                    <span class="timeline-date">Now</span>
+                                </div>
+                            </div>
+                            <div class="timeline-item pending">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-content">
+                                    <span class="timeline-text">Arrived in India</span>
+                                    <span class="timeline-date">Est. Jan 8</span>
+                                </div>
+                            </div>
+                            <div class="timeline-item pending">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-content">
+                                    <span class="timeline-text">India Customs Clearance</span>
+                                    <span class="timeline-date">Est. Jan 9</span>
+                                </div>
+                            </div>
+                            <div class="timeline-item pending">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-content">
+                                    <span class="timeline-text">Local Dispatch</span>
+                                    <span class="timeline-date">Est. Jan 10</span>
+                                </div>
+                            </div>
+                            <div class="timeline-item pending">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-content">
+                                    <span class="timeline-text">Delivered</span>
+                                    <span class="timeline-date">Est. Jan 11</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Countries Section -->
+    <section class="countries-section">
+        <div class="section-container">
+            <div class="section-header animate-on-scroll">
+                <span class="section-badge">Global Reach</span>
+                <h2 class="section-title">Ship from Multiple Countries</h2>
+                <p class="section-subtitle">Get warehouse addresses in multiple locations—more countries coming soon</p>
+            </div>
+            <div class="countries-grid">
+                <div class="country-card available animate-on-scroll stagger-1">
+                    <span class="country-flag">🇨🇳</span>
+                    <div class="country-info">
+                        <h4>China → India</h4>
+                        <span class="country-status status-live">Available Now</span>
+                    </div>
+                </div>
+                <div class="country-card animate-on-scroll stagger-2">
+                    <span class="country-flag">🇭🇰</span>
+                    <div class="country-info">
+                        <h4>Hong Kong → India</h4>
+                        <span class="country-status status-soon">Coming Soon</span>
+                    </div>
+                </div>
+                <div class="country-card animate-on-scroll stagger-3">
+                    <span class="country-flag">🇨🇦</span>
+                    <div class="country-info">
+                        <h4>Canada → India</h4>
+                        <span class="country-status status-soon">Coming Soon</span>
+                    </div>
+                </div>
+                <div class="country-card animate-on-scroll stagger-4">
+                    <span class="country-flag">🇲🇾</span>
+                    <div class="country-info">
+                        <h4>Malaysia → India</h4>
+                        <span class="country-status status-soon">Coming Soon</span>
+                    </div>
+                </div>
+                <div class="country-card animate-on-scroll stagger-5">
+                    <span class="country-flag">🇦🇺</span>
+                    <div class="country-info">
+                        <h4>Australia → India</h4>
+                        <span class="country-status status-soon">Coming Soon</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing CTA Section -->
+    <section>
+        <div class="section-container">
+            <div class="section-header animate-on-scroll">
+                <span class="section-badge">Transparent Pricing</span>
+                <h2 class="section-title">Simple, All-Inclusive Pricing</h2>
+                <p class="section-subtitle">Sign up to see your personalized per-kg rates for each route</p>
+            </div>
+            <div class="pricing-cta animate-on-scroll">
+                <div class="pricing-cta-box">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="1" x2="12" y2="23"></line>
+                        <path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"></path>
+                    </svg>
+                    <h3>Per-KG All-Inclusive Rate</h3>
+                    <p>Your rate includes shipping, customs duties, and doorstep delivery. No hidden fees.</p>
+                    <a href="/signup" class="btn btn-primary">Sign Up to See Rates</a>
+                </div>
+                <div class="pricing-limits">
+                    <div class="pricing-limit">
+                        <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        Under 50 kg? Self-service
+                    </div>
+                    <div class="pricing-limit">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"></path>
+                        </svg>
+                        Over 50 kg? Contact us
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="section-container">
+            <div class="section-header animate-on-scroll">
+                <span class="section-badge">Got Questions?</span>
+                <h2 class="section-title">Common Questions</h2>
+                <p class="section-subtitle">Everything you need to know about OnePrice</p>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item animate-on-scroll stagger-1">
+                    <button class="faq-question">
+                        Who is OnePrice for?
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">OnePrice is designed for first-time importers, small resellers, D2C brands testing products, and anyone making personal imports. It's perfect for those who want simplicity and predictability without the complexity of traditional freight forwarding.</div>
+                    </div>
+                </div>
+                <div class="faq-item animate-on-scroll stagger-2">
+                    <button class="faq-question">
+                        What's included in the OnePrice rate?
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">Your OnePrice per-kg rate includes everything: shipping from our warehouse to India, customs clearance at both origin and destination, and doorstep delivery. No hidden fees, no surprises.</div>
+                    </div>
+                </div>
+                <div class="faq-item animate-on-scroll stagger-3">
+                    <button class="faq-question">
+                        What are the order limits?
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">OnePrice works best for shipments under 50 kg—perfect for samples and small volumes with no minimum order. For bulk orders over 50 kg or higher value shipments, please contact our team directly for customized solutions.</div>
+                    </div>
+                </div>
+                <div class="faq-item animate-on-scroll stagger-4">
+                    <button class="faq-question">
+                        Which countries are supported?
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">Currently, OnePrice supports imports from China to India. We're expanding soon to include Hong Kong, Canada, Malaysia, and Australia—you'll see all available options in your dashboard after signing up.</div>
+                    </div>
+                </div>
+                <div class="faq-item animate-on-scroll stagger-5">
+                    <button class="faq-question">
+                        Do you handle product quality inspection?
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">OnePrice is a logistics-only service—we handle shipping from our warehouse to your doorstep. Product quality and quantity verification is between you and your supplier. If you need quality inspection, consider our full ImportNow services.</div>
+                    </div>
+                </div>
+                <div class="faq-item animate-on-scroll stagger-6">
+                    <button class="faq-question">
+                        How do I track my shipment?
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">Once your supplier ships to our warehouse and you enter the tracking number, you'll get real-time updates through your dashboard. Track every step: warehouse acceptance, dispatch, customs clearance, transit, local delivery, and final delivery with accurate ETAs.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-container animate-on-scroll">
+            <div class="cta-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"></path>
+                    <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                    <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                </svg>
+            </div>
+            <h2 class="cta-title">Ready to Simplify Your Imports?</h2>
+            <p class="cta-subtitle">Sign up for OnePrice and get your warehouse addresses instantly. No calls, no negotiations—just simple importing.</p>
+            <div class="cta-buttons">
+                <a href="/signup" class="btn btn-primary">Sign Up for OnePrice</a>
+                <a href="/contact" class="btn btn-secondary">Talk to Our Team</a>
+            </div>
+            <p class="cta-note">You'll receive your warehouse addresses immediately after signup</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <div class="footer-logo">IMPORT<span>NOW</span></div>
+                <p class="footer-desc">Your trusted partner for seamless imports from China to India. We simplify the complex so you can focus on growing your business.</p>
+                <div class="footer-contact">
+                    <a href="mailto:hello@importnow.in">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                        hello@importnow.in
+                    </a>
+                    <a href="tel:+919989724320">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z"></path>
+                        </svg>
+                        +91 9989 724 320
+                    </a>
+                    <a href="tel:+8613025407345">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z"></path>
+                        </svg>
+                        +86 1302 540 7345
+                    </a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4>Company</h4>
+                <div class="footer-links">
+                    <a href="/about">About Us</a>
+                    <a href="/services">Our Services</a>
+                    <a href="/blog">Blog</a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4>Services</h4>
+                <div class="footer-links">
+                    <a href="/oneprice">OnePrice</a>
+                    <a href="/sourcing">Product Sourcing</a>
+                    <a href="/logistics">Logistics</a>
+                    <a href="/branding">Brand Building</a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4>Support</h4>
+                <div class="footer-links">
+                    <a href="/faq">FAQ</a>
+                    <a href="/contact">Contact Us</a>
+                    <a href="/track">Track Shipment</a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4>Legal</h4>
+                <div class="footer-links">
+                    <a href="/privacy">Privacy Policy</a>
+                    <a href="/shipping">Shipping Policy</a>
+                    <a href="/terms">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p class="footer-copyright">© 2026 ImportNow. All rights reserved.</p>
+            <div class="footer-social">
+                <a href="#" aria-label="LinkedIn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"></path>
+                        <rect x="2" y="9" width="4" height="12"></rect>
+                        <circle cx="4" cy="4" r="2"></circle>
+                    </svg>
+                </a>
+                <a href="#" aria-label="Twitter">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
+                    </svg>
+                </a>
+                <a href="#" aria-label="Facebook">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px 0px -60px 0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animated elements
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const item = btn.parentElement;
+                const wasActive = item.classList.contains('active');
+                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+                if (!wasActive) item.classList.add('active');
+            });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

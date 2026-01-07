@@ -71,7 +71,7 @@ export function PartnersSection() {
         </div>
 
         {/* Partners Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
           {partners.map((partner, index) => (
             <Card
               key={index}
