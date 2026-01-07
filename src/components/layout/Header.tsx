@@ -50,8 +50,9 @@ export function Header() {
 
   return (
     <header
+      style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 9999 }}
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+        "transition-all duration-300",
         isScrolled
           ? "bg-white/95 backdrop-blur-md shadow-md"
           : "bg-white"
@@ -131,7 +132,7 @@ export function Header() {
                 className="bg-[#0B1F33] hover:bg-[#081620] text-white font-semibold px-6 py-2 rounded-lg"
                 asChild
               >
-                <Link href="/login">Login</Link>
+                <a href="https://oneprice.importnow.in/sign-in" target="_blank" rel="noopener noreferrer">Login</a>
               </Button>
             ) : (
               <Button
@@ -145,15 +146,30 @@ export function Header() {
             )}
           </div>
 
-          {/* Mobile Menu Button - Hidden on OnePrice page */}
+          {/* Mobile: New Service Button + Menu Button - Hidden on OnePrice page */}
           {!isOnePricePage && (
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="lg:hidden p-2 text-[#1F2933] hover:text-[#0B1F33] transition-colors"
-              aria-label="Toggle menu"
-            >
-              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </button>
+            <div className="lg:hidden flex items-center gap-2">
+              {/* New Service Badge */}
+              <Link
+                href="/oneprice"
+                className="relative inline-flex items-center gap-1.5 bg-gradient-to-r from-[#fff7ed] to-[#ffedd5] border border-[#fed7aa] px-3 py-1.5 rounded-full text-xs font-medium text-[#c2410c] shadow-[0_0_12px_rgba(251,146,60,0.3)] hover:shadow-[0_0_18px_rgba(251,146,60,0.4)] transition-shadow"
+              >
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#f97316] opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#f97316]"></span>
+                </span>
+                New Service
+              </Link>
+              
+              {/* Mobile Menu Button */}
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="p-2 text-[#1F2933] hover:text-[#0B1F33] transition-colors"
+                aria-label="Toggle menu"
+              >
+                {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              </button>
+            </div>
           )}
 
           {/* Mobile Login Button - Show on OnePrice page */}
@@ -165,7 +181,7 @@ export function Header() {
                 className="bg-[#0B1F33] hover:bg-[#081620] text-white font-semibold px-4 py-2 rounded-lg"
                 asChild
               >
-                <Link href="/login">Login</Link>
+                <a href="https://oneprice.importnow.in/sign-in" target="_blank" rel="noopener noreferrer">Login</a>
               </Button>
             </div>
           )}

@@ -162,6 +162,19 @@
   }
 }
 
+@keyframes pulse-glow-orange {
+  0%, 100% {
+    box-shadow: 0 0 12px 2px rgba(251, 146, 60, 0.5), 0 0 20px 4px rgba(249, 115, 22, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px 4px rgba(251, 146, 60, 0.6), 0 0 30px 8px rgba(249, 115, 22, 0.4);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow-orange 2s ease-in-out infinite;
+}
+
 /* Base Styles */
 html {
   scroll-behavior: smooth;

@@ -48,36 +48,38 @@ export default function OnePricePage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="pt-36 pb-24 px-4 md:px-8 bg-gradient-to-b from-[#f8fafc] to-white overflow-hidden">
+      <section className="pt-20 md:pt-36 pb-6 md:pb-24 px-4 md:px-8 bg-gradient-to-b from-[#f8fafc] to-white overflow-hidden">
         <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <div className="inline-flex items-center gap-2.5 bg-white border border-[#e2e8f0] px-3.5 py-1.5 rounded-full text-xs text-[#475569] mb-6 shadow-sm">
-                <span className="bg-[#e07a3d] text-white px-2 py-0.5 rounded-full font-semibold text-[11px] uppercase tracking-wide">
-                  New
-                </span>
-                Introducing OnePrice by ImportNow
+          <div className="grid lg:grid-cols-2 gap-6 lg:gap-16 items-center">
+            <div className="text-center lg:text-left">
+              <div className="relative inline-flex items-center gap-2 bg-gradient-to-r from-[#fff7ed] to-[#ffedd5] border border-[#fed7aa] px-4 py-2 rounded-full text-sm font-medium text-[#c2410c] mb-3 md:mb-6 shadow-[0_0_15px_rgba(251,146,60,0.4)] animate-pulse-glow">
+                <span className="absolute inset-0 rounded-full bg-gradient-to-r from-[#fb923c]/20 to-[#f97316]/20 blur-md -z-10"></span>
+                <svg className="w-4 h-4 text-[#ea580c]" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M5 5a3 3 0 015-2.236A3 3 0 0114.83 6H16a2 2 0 110 4h-5V9a1 1 0 10-2 0v1H4a2 2 0 110-4h1.17C5.06 5.687 5 5.35 5 5zm4 1V5a1 1 0 10-1 1h1zm3 0a1 1 0 10-1-1v1h1z" />
+                  <path d="M9 11H3v5a2 2 0 002 2h4v-7zM11 18h4a2 2 0 002-2v-5h-6v7z" />
+                </svg>
+                New Service
               </div>
-              <h1 className="text-5xl md:text-6xl font-bold leading-tight text-[#0f172a] mb-5 tracking-tight">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight text-[#0f172a] mb-3 md:mb-5 tracking-tight">
                 Import Simplified.
                 <br />
                 <span className="bg-gradient-to-r from-[#e07a3d] to-[#f5a366] bg-clip-text text-transparent">
                   One Price. Zero Hassle.
                 </span>
               </h1>
-              <p className="text-lg text-[#475569] mb-8 max-w-lg leading-relaxed">
+              <p className="text-base md:text-lg text-[#475569] mb-4 md:mb-8 max-w-lg mx-auto lg:mx-0 leading-relaxed">
                 Skip the complexity. Get a fixed per-kg rate for your small shipments—no
                 negotiations, no surprises, no middlemen. Just sign up, ship, and track.
               </p>
-              <div className="flex gap-3 mb-10">
+              <div className="flex flex-col sm:flex-row gap-3 mb-4 md:mb-10 justify-center lg:justify-start">
                 <Button variant="primary" size="lg" asChild className="bg-[#e07a3d] hover:bg-[#d16a2d] shadow-[0_2px_8px_rgba(224,122,61,0.25)] hover:shadow-[0_8px_24px_rgba(224,122,61,0.3)] hover:-translate-y-0.5">
-                  <Link href="/signup">Sign Up for OnePrice</Link>
+                  <a href="https://oneprice.importnow.in/sign-up" target="_blank" rel="noopener noreferrer">Sign Up for OnePrice</a>
                 </Button>
                 <Button variant="secondary" size="lg" asChild>
-                  <Link href="#how-it-works">See How It Works</Link>
+                  <a href="https://oneprice.importnow.in/sign-in" target="_blank" rel="noopener noreferrer">Login to OnePrice</a>
                 </Button>
               </div>
-              <div className="flex flex-wrap gap-5">
+              <div className="flex flex-wrap gap-3 md:gap-5 justify-center lg:justify-start">
                 {["No minimum order", "Self-service platform", "Best-in-class rates"].map(
                   (feature, idx) => (
                     <div key={idx} className="flex items-center gap-2 text-sm text-[#475569] font-medium">
@@ -88,7 +90,8 @@ export default function OnePricePage() {
                 )}
               </div>
             </div>
-            <div className="flex justify-end">
+            {/* Quote card - hidden on mobile, shown on lg screens */}
+            <div className="hidden lg:flex justify-end">
               <div className="bg-white rounded-[20px] p-8 shadow-2xl border border-[#f1f5f9] max-w-[380px] w-full animate-on-scroll">
                 <div className="flex items-center gap-4 mb-6 pb-5 border-b border-[#f1f5f9]">
                   <div className="w-12 h-12 bg-gradient-to-br from-[#e07a3d] to-[#f5a366] rounded-[14px] flex items-center justify-center text-white">
@@ -136,14 +139,62 @@ export default function OnePricePage() {
         </div>
       </section>
 
+      {/* Quote Card Section - Mobile Only */}
+      <section className="lg:hidden py-4 px-4 bg-gradient-to-b from-white to-[#f8fafc]">
+        <div className="max-w-md mx-auto">
+          <div className="bg-white rounded-[20px] p-5 sm:p-8 shadow-2xl border border-[#f1f5f9] animate-on-scroll">
+            <div className="flex items-center gap-3 mb-4 pb-4 border-b border-[#f1f5f9]">
+              <div className="w-10 h-10 bg-gradient-to-br from-[#e07a3d] to-[#f5a366] rounded-xl flex items-center justify-center text-white">
+                <Clock className="w-5 h-5" />
+              </div>
+              <div>
+                <div className="font-semibold text-base text-[#0f172a] tracking-tight">
+                  OnePrice Quote
+                </div>
+                <div className="text-xs text-[#94a3b8] mt-0.5">
+                  All-inclusive pricing
+                </div>
+              </div>
+            </div>
+            {[
+              "Shipping from Warehouse",
+              "Customs & Duties",
+              "Doorstep Delivery",
+              "Tracking & Updates",
+            ].map((label, idx) => (
+              <div
+                key={idx}
+                className="flex justify-between items-center py-2.5 border-b border-[#f1f5f9] last:border-b-0"
+              >
+                <span className="text-[#475569] text-sm">{label}</span>
+                <span className="text-[#10b981] font-medium text-sm flex items-center gap-1.5">
+                  <Check className="w-4 h-4" />
+                  Included
+                </span>
+              </div>
+            ))}
+            <div className="mt-3 pt-3 border-t-2 border-[#0f172a] flex justify-between items-center">
+              <span className="font-semibold text-[#0f172a]">Total</span>
+              <span className="text-lg font-bold text-[#e07a3d] tracking-tight">
+                One Simple Price
+              </span>
+            </div>
+            <div className="flex items-center gap-2 mt-3 p-2.5 bg-[rgba(16,185,129,0.1)] rounded-[10px] text-xs text-[#10b981] font-medium">
+              <Check className="w-4 h-4" />
+              No hidden fees. Ever.
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Audience Section */}
-      <section className="py-24 px-4 md:px-8 bg-[#f8fafc]">
+      <section className="py-16 md:py-24 px-4 md:px-8 bg-[#f8fafc]">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-14 animate-on-scroll">
-            <span className="inline-block bg-[rgba(224,122,61,0.1)] text-[#e07a3d] px-4 py-1.5 rounded-full font-semibold text-xs mb-4 tracking-wide">
+          <div className="text-center mb-8 md:mb-14 animate-on-scroll">
+            <span className="inline-block bg-[rgba(224,122,61,0.1)] text-[#e07a3d] px-4 py-1.5 rounded-full font-semibold text-xs mb-3 md:mb-4 tracking-wide">
               Perfect For You
             </span>
-            <h2 className="text-4xl font-bold text-[#0f172a] mb-3.5 tracking-tight">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#0f172a] mb-2.5 md:mb-3.5 tracking-tight">
               Who Is OnePrice For?
             </h2>
             <p className="text-lg text-[#475569] max-w-[560px] mx-auto leading-relaxed">
@@ -213,13 +264,13 @@ export default function OnePricePage() {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-24 px-4 md:px-8">
+      <section className="py-16 md:py-24 px-4 md:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-14 animate-on-scroll">
-            <span className="inline-block bg-[rgba(224,122,61,0.1)] text-[#e07a3d] px-4 py-1.5 rounded-full font-semibold text-xs mb-4 tracking-wide">
+          <div className="text-center mb-8 md:mb-14 animate-on-scroll">
+            <span className="inline-block bg-[rgba(224,122,61,0.1)] text-[#e07a3d] px-4 py-1.5 rounded-full font-semibold text-xs mb-3 md:mb-4 tracking-wide">
               Why OnePrice
             </span>
-            <h2 className="text-4xl font-bold text-[#0f172a] mb-3.5 tracking-tight">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#0f172a] mb-2.5 md:mb-3.5 tracking-tight">
               How OnePrice Helps You
             </h2>
             <p className="text-lg text-[#475569] max-w-[560px] mx-auto leading-relaxed">
@@ -281,13 +332,13 @@ export default function OnePricePage() {
       </section>
 
       {/* How It Works Section */}
-      <section id="how-it-works" className="py-24 px-4 md:px-8 bg-[#f8fafc] scroll-mt-20">
+      <section id="how-it-works" className="py-16 md:py-24 px-4 md:px-8 bg-[#f8fafc] scroll-mt-20">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-14 animate-on-scroll">
-            <span className="inline-block bg-[rgba(224,122,61,0.1)] text-[#e07a3d] px-4 py-1.5 rounded-full font-semibold text-xs mb-4 tracking-wide">
+          <div className="text-center mb-8 md:mb-14 animate-on-scroll">
+            <span className="inline-block bg-[rgba(224,122,61,0.1)] text-[#e07a3d] px-4 py-1.5 rounded-full font-semibold text-xs mb-3 md:mb-4 tracking-wide">
               Simple Process
             </span>
-            <h2 className="text-4xl font-bold text-[#0f172a] mb-3.5 tracking-tight">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#0f172a] mb-2.5 md:mb-3.5 tracking-tight">
               How OnePrice Works
             </h2>
             <p className="text-lg text-[#475569] max-w-[560px] mx-auto leading-relaxed">
@@ -343,17 +394,17 @@ export default function OnePricePage() {
       </section>
 
       {/* Tracking Section */}
-      <section className="py-24 px-4 md:px-8">
+      <section className="py-16 md:py-24 px-4 md:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-10 md:gap-16 items-center">
             <div className="animate-on-scroll">
-              <span className="inline-block bg-[rgba(224,122,61,0.1)] text-[#e07a3d] px-4 py-1.5 rounded-full font-semibold text-xs mb-6 tracking-wide">
+              <span className="inline-block bg-[rgba(224,122,61,0.1)] text-[#e07a3d] px-4 py-1.5 rounded-full font-semibold text-xs mb-4 md:mb-6 tracking-wide">
                 Full Visibility
               </span>
-              <h2 className="text-4xl font-bold text-[#0f172a] mb-4 tracking-tight">
+              <h2 className="text-3xl md:text-4xl font-bold text-[#0f172a] mb-3 md:mb-4 tracking-tight">
                 Track Every Step of Your Shipment
               </h2>
-              <p className="text-lg text-[#475569] mb-8 leading-relaxed">
+              <p className="text-base md:text-lg text-[#475569] mb-5 md:mb-8 leading-relaxed">
                 Never wonder where your products are. Our real-time tracking gives you
                 complete visibility from warehouse to doorstep with accurate ETAs.
               </p>
@@ -426,13 +477,13 @@ export default function OnePricePage() {
       </section>
 
       {/* Countries Section */}
-      <section className="py-24 px-4 md:px-8 bg-[#f8fafc]">
+      <section className="py-16 md:py-24 px-4 md:px-8 bg-[#f8fafc]">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-14 animate-on-scroll">
-            <span className="inline-block bg-[rgba(224,122,61,0.1)] text-[#e07a3d] px-4 py-1.5 rounded-full font-semibold text-xs mb-4 tracking-wide">
+          <div className="text-center mb-8 md:mb-14 animate-on-scroll">
+            <span className="inline-block bg-[rgba(224,122,61,0.1)] text-[#e07a3d] px-4 py-1.5 rounded-full font-semibold text-xs mb-3 md:mb-4 tracking-wide">
               Global Reach
             </span>
-            <h2 className="text-4xl font-bold text-[#0f172a] mb-3.5 tracking-tight">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#0f172a] mb-2.5 md:mb-3.5 tracking-tight">
               Ship from Multiple Countries
             </h2>
             <p className="text-lg text-[#475569] max-w-[560px] mx-auto leading-relaxed">
@@ -477,13 +528,13 @@ export default function OnePricePage() {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-24 px-4 md:px-8 font-sans">
+      <section className="py-16 md:py-24 px-4 md:px-8 font-sans">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-14 animate-on-scroll">
-            <span className="inline-block bg-[rgba(224,122,61,0.1)] text-[#e07a3d] px-4 py-1.5 rounded-full font-semibold text-xs mb-4 tracking-wide">
+          <div className="text-center mb-8 md:mb-14 animate-on-scroll">
+            <span className="inline-block bg-[rgba(224,122,61,0.1)] text-[#e07a3d] px-4 py-1.5 rounded-full font-semibold text-xs mb-3 md:mb-4 tracking-wide">
               Got Questions?
             </span>
-            <h2 className="text-4xl font-bold text-[#0f172a] mb-3.5 tracking-tight font-sans">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#0f172a] mb-2.5 md:mb-3.5 tracking-tight font-sans">
               Common Questions
             </h2>
             <p className="text-lg text-[#475569] max-w-[560px] mx-auto leading-relaxed font-sans">
@@ -556,22 +607,22 @@ export default function OnePricePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-4 md:px-8 bg-[#0f172a] text-center relative overflow-hidden font-sans">
+      <section className="py-12 md:py-20 px-4 md:px-8 bg-[#0f172a] text-center relative overflow-hidden font-sans">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_70%,rgba(224,122,61,0.12)_0%,transparent_50%)]"></div>
         <div className="max-w-2xl mx-auto relative z-10 animate-on-scroll">
-          <div className="w-16 h-16 bg-white/8 rounded-[18px] flex items-center justify-center mx-auto mb-6 text-[#e07a3d]">
-            <Package className="w-8 h-8" />
+          <div className="w-14 md:w-16 h-14 md:h-16 bg-white/8 rounded-[18px] flex items-center justify-center mx-auto mb-4 md:mb-6 text-[#e07a3d]">
+            <Package className="w-7 md:w-8 h-7 md:h-8" />
           </div>
-          <h2 className="text-4xl font-bold text-white mb-4 tracking-tight font-sans">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-3 md:mb-4 tracking-tight font-sans">
             Ready to Simplify Your Imports?
           </h2>
-          <p className="text-lg text-white/65 mb-8 leading-relaxed font-sans">
+          <p className="text-base md:text-lg text-white/65 mb-6 md:mb-8 leading-relaxed font-sans">
             Sign up for OnePrice and get your warehouse addresses instantly. No calls, no
             negotiations—just simple importing.
           </p>
           <div className="flex justify-center gap-3 flex-wrap">
             <Button variant="primary" size="lg" asChild className="bg-[#e07a3d] hover:bg-[#d16a2d] shadow-[0_2px_8px_rgba(224,122,61,0.25)] hover:shadow-[0_8px_24px_rgba(224,122,61,0.3)] hover:-translate-y-0.5">
-              <Link href="/signup">Sign Up for OnePrice</Link>
+              <a href="https://oneprice.importnow.in/sign-up" target="_blank" rel="noopener noreferrer">Sign Up for OnePrice</a>
             </Button>
             <Button
               variant="secondary"

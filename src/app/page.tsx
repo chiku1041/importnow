@@ -1,6 +1,8 @@
 import { HeroSection } from "@/components/home/HeroSection";
 import { CommitmentSection } from "@/components/home/CommitmentSection";
+import { WhyDifferentSection } from "@/components/home/WhyDifferentSection";
 import { PartnersSection } from "@/components/home/PartnersSection";
+import { OurServicesSection } from "@/components/home/OurServicesSection";
 import { ExperienceSection } from "@/components/home/ExperienceSection";
 import { GallerySection } from "@/components/home/GallerySection";
 import { OnePriceSection } from "@/components/home/OnePriceSection";
@@ -17,7 +19,9 @@ export default function HomePage() {
         secondaryCtaHref="/services"
       />
       <CommitmentSection />
+      <WhyDifferentSection />
       <PartnersSection />
+      <OurServicesSection />
       <ExperienceSection />
       <GallerySection />
       <OnePriceSection />
