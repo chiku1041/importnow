@@ -3,7 +3,13 @@
 import { MessageCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 
-export function MobileWhatsAppButton() {
+interface MobileWhatsAppButtonProps {
+  whatsappLink?: string;
+}
+
+export function MobileWhatsAppButton({ 
+  whatsappLink = "https://wa.me/+919989724320?text=Hi%2C%20I%27m%20interested%20in%20the%20China%20Import%20Learning%20Trip" 
+}: MobileWhatsAppButtonProps) {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -21,10 +27,7 @@ export function MobileWhatsAppButton() {
   }, []);
 
   const handleClick = () => {
-    window.open(
-      "https://wa.me/+919989724320?text=Hi%2C%20I%27m%20interested%20in%20the%20China%20Import%20Learning%20Trip",
-      "_blank"
-    );
+    window.open(whatsappLink, "_blank");
   };
 
   return (

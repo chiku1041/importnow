@@ -2,12 +2,15 @@
 
 import { MessageCircle } from "lucide-react";
 
-export function FinalCTASection() {
+interface FinalCTASectionProps {
+  whatsappLink?: string;
+}
+
+export function FinalCTASection({ 
+  whatsappLink = "https://wa.me/+919989724320?text=Hi%2C%20I%27m%20interested%20in%20the%20China%20Import%20Learning%20Trip" 
+}: FinalCTASectionProps) {
   const handleWhatsAppClick = () => {
-    window.open(
-      "https://wa.me/+919989724320?text=Hi%2C%20I%27m%20interested%20in%20the%20China%20Import%20Learning%20Trip",
-      "_blank"
-    );
+    window.open(whatsappLink, "_blank");
   };
 
   return (

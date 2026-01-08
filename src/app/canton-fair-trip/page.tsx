@@ -37,9 +37,11 @@ export const metadata: Metadata = {
 };
 
 export default function CantonFairTripPage() {
+  const whatsappLink = "https://wa.me/919989724320?text=Interested%20in%20the%20Canton%20Fair";
+  
   return (
     <>
-      <ChinaTripHero />
+      <ChinaTripHero whatsappLink={whatsappLink} />
       <WhoThisTripIsFor />
       <WhyThisTripExists />
       <YourGuideSection />
@@ -48,9 +50,9 @@ export default function CantonFairTripPage() {
       <ShenzhenElectronicsHub />
       <WhatsIncluded />
       <GroupSizeUSP />
-      <FinalCTASection />
+      <FinalCTASection whatsappLink={whatsappLink} />
       <Disclaimers />
-      <MobileWhatsAppButton />
+      <MobileWhatsAppButton whatsappLink={whatsappLink} />
     </>
   );
 }

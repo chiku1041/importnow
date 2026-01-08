@@ -14,9 +14,9 @@ import {
 } from "@/lib/structured-data";
 
 export const metadata: Metadata = {
-  title: "ImportNow - China to India Import Services | Product Sourcing & Logistics",
+  title: "ImportNow | End-to-End Import & Supply Chain Partner for Indian Businesses",
   description:
-    "End-to-end China sourcing, quality control, and import execution for Indian businesses. Product sourcing, quality inspection, logistics, and customs clearance. 5+ years experience, 1000+ manufacturers.",
+    "ImportNow supports startups, SMEs, and growing brands with sourcing, supply chain, customs clearance, and complete import execution into India.",
   keywords: [
     "China to India import",
     "product sourcing China",
@@ -26,11 +26,13 @@ export const metadata: Metadata = {
     "customs clearance India",
     "freight forwarding",
     "China import logistics",
+    "supply chain partner",
+    "import execution India",
   ],
   openGraph: {
-    title: "ImportNow - China to India Import Services",
+    title: "ImportNow | End-to-End Import & Supply Chain Partner for Indian Businesses",
     description:
-      "End-to-end China sourcing, quality control, and import execution for Indian businesses.",
+      "ImportNow supports startups, SMEs, and growing brands with sourcing, supply chain, customs clearance, and complete import execution into India.",
     url: "https://importnow.in",
     siteName: "ImportNow",
     type: "website",
@@ -38,9 +40,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "ImportNow - China to India Import Services",
+    title: "ImportNow | End-to-End Import & Supply Chain Partner for Indian Businesses",
     description:
-      "End-to-end China sourcing, quality control, and import execution for Indian businesses.",
+      "ImportNow supports startups, SMEs, and growing brands with sourcing, supply chain, customs clearance, and complete import execution into India.",
   },
   alternates: {
     canonical: "https://importnow.in",
@@ -55,7 +57,7 @@ export default function HomePage() {
     name: "ImportNow",
     url: baseUrl,
     description:
-      "End-to-end China sourcing, quality control, and import execution for Indian businesses.",
+      "ImportNow supports startups, SMEs, and growing brands with sourcing, supply chain, customs clearance, and complete import execution into India.",
     contactPoint: {
       telephone: "+919989724320",
       contactType: "Customer Service",

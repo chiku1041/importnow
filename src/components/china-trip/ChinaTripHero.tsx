@@ -3,7 +3,13 @@
 import { useState, useEffect } from "react";
 import { MessageCircle } from "lucide-react";
 
-export function ChinaTripHero() {
+interface ChinaTripHeroProps {
+  whatsappLink?: string;
+}
+
+export function ChinaTripHero({ 
+  whatsappLink = "https://wa.me/+919989724320?text=Hi%2C%20I%27m%20interested%20in%20the%20China%20Import%20Learning%20Trip" 
+}: ChinaTripHeroProps) {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -12,10 +18,7 @@ export function ChinaTripHero() {
   }, []);
 
   const handleWhatsAppClick = () => {
-    window.open(
-      "https://wa.me/+919989724320?text=Hi%2C%20I%27m%20interested%20in%20the%20China%20Import%20Learning%20Trip",
-      "_blank"
-    );
+    window.open(whatsappLink, "_blank");
   };
 
   return (

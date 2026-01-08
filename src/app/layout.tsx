@@ -24,18 +24,20 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "ImportNow - China to India Import Services",
+    default: "ImportNow | End-to-End Import & Supply Chain Partner for Indian Businesses",
     template: "%s | ImportNow",
   },
   description:
-    "End-to-end China sourcing, quality control, and import execution for Indian businesses. Product sourcing, quality inspection, logistics, and customs clearance.",
+    "ImportNow supports startups, SMEs, and growing brands with sourcing, supply chain, customs clearance, and complete import execution into India.",
   keywords: [
     "China to India import",
-    "product sourcing",
-    "import services",
+    "product sourcing China",
+    "import services India",
+    "China sourcing agent",
     "quality inspection",
-    "customs clearance",
+    "customs clearance India",
     "freight forwarding",
+    "China import logistics",
   ],
   authors: [{ name: "ImportNow" }],
   creator: "ImportNow",
@@ -49,15 +51,15 @@ export const metadata: Metadata = {
     locale: "en_IN",
     url: "https://importnow.in",
     siteName: "ImportNow",
-    title: "ImportNow - China to India Import Services",
+    title: "ImportNow | End-to-End Import & Supply Chain Partner for Indian Businesses",
     description:
-      "End-to-end China sourcing, quality control, and import execution for Indian businesses.",
+      "ImportNow supports startups, SMEs, and growing brands with sourcing, supply chain, customs clearance, and complete import execution into India.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "ImportNow - China to India Import Services",
+    title: "ImportNow | End-to-End Import & Supply Chain Partner for Indian Businesses",
     description:
-      "End-to-end China sourcing, quality control, and import execution for Indian businesses.",
+      "ImportNow supports startups, SMEs, and growing brands with sourcing, supply chain, customs clearance, and complete import execution into India.",
   },
   robots: {
     index: true,

@@ -126,7 +126,11 @@ export function HeroSection({
                 style={{ width: "auto", height: "auto" }}
               />
             </div>
-            <h1 className="font-black text-black leading-tight tracking-tight">
+            {/* SEO-friendly static H1 for search engines */}
+            <h1 className="sr-only">ImportNow | End-to-End Import & Supply Chain Partner for Indian Businesses</h1>
+            
+            {/* Visual H1 for users */}
+            <div className="font-black text-black leading-tight tracking-tight" role="presentation" aria-hidden="true">
               <span className="block text-4xl md:text-6xl lg:text-7xl">Import from China.</span>
               <span className="block relative overflow-hidden h-[1.5em] md:h-[1.2em] text-3xl md:text-5xl lg:text-6xl">
                 <span
@@ -139,7 +143,7 @@ export function HeroSection({
                   {phrases[currentIndex]}
                 </span>
               </span>
-            </h1>
+            </div>
             <p className="text-lg md:text-xl lg:text-2xl text-[#666666] max-w-3xl mx-auto leading-relaxed">
               {subtitle}
             </p>
