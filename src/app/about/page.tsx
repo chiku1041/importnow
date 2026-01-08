@@ -3,11 +3,37 @@ import { Check, MapPin, Users, Award, Briefcase, Globe, Shield, Heart } from "lu
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Link from "next/link";
+import {
+  generateWebPageSchema,
+  generateBreadcrumbSchema,
+} from "@/lib/structured-data";
 
 export const metadata: Metadata = {
-  title: "About Us",
+  title: "About Us - ImportNow | China to India Import Experts",
   description:
     "Learn about ImportNow - your reliable partner for China to India imports with 5+ years of experience, 1000+ manufacturer relationships, and on-ground presence in China.",
+  keywords: [
+    "about ImportNow",
+    "China import company",
+    "import experts India",
+    "sourcing company",
+  ],
+  openGraph: {
+    title: "About Us - ImportNow",
+    description:
+      "Learn about ImportNow - your reliable partner for China to India imports with 5+ years of experience, 1000+ manufacturer relationships, and on-ground presence in China.",
+    url: "https://importnow.in/about",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About Us - ImportNow",
+    description:
+      "Learn about ImportNow - your reliable partner for China to India imports with 5+ years of experience, 1000+ manufacturer relationships, and on-ground presence in China.",
+  },
+  alternates: {
+    canonical: "https://importnow.in/about",
+  },
 };
 
 const values = [
@@ -65,8 +91,43 @@ const caseStudies = [
 ];
 
 export default function AboutPage() {
+  const baseUrl = "https://importnow.in";
+  const pageUrl = `${baseUrl}/about`;
+
+  // Breadcrumb structured data
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Home", url: baseUrl },
+    { name: "About Us", url: pageUrl },
+  ]);
+
+  // WebPage structured data
+  const webPageSchema = generateWebPageSchema({
+    name: "About Us - ImportNow",
+    description:
+      "Learn about ImportNow - your reliable partner for China to India imports with 5+ years of experience, 1000+ manufacturer relationships, and on-ground presence in China.",
+    url: pageUrl,
+    breadcrumb: [
+      { name: "Home", url: baseUrl },
+      { name: "About Us", url: pageUrl },
+    ],
+  });
+
   return (
     <>
+      {/* Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(webPageSchema),
+        }}
+      />
+
       {/* Hero Section */}
       <section className="bg-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-[0.03]">

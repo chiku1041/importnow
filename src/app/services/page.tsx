@@ -13,11 +13,40 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Link from "next/link";
+import {
+  generateWebPageSchema,
+  generateBreadcrumbSchema,
+  generateServiceSchema,
+} from "@/lib/structured-data";
 
 export const metadata: Metadata = {
-  title: "Our Services",
+  title: "Our Services - Product Sourcing, Quality Inspection & Logistics | ImportNow",
   description:
     "Comprehensive import services from China to India: product sourcing, quality inspection, logistics, customs clearance, and brand building. Modular solutions for your business needs.",
+  keywords: [
+    "product sourcing China",
+    "quality inspection services",
+    "China import logistics",
+    "customs clearance India",
+    "brand building services",
+    "factory visits China",
+  ],
+  openGraph: {
+    title: "Our Services - ImportNow",
+    description:
+      "Comprehensive import services from China to India: product sourcing, quality inspection, logistics, customs clearance, and brand building.",
+    url: "https://importnow.in/services",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Our Services - ImportNow",
+    description:
+      "Comprehensive import services from China to India: product sourcing, quality inspection, logistics, customs clearance, and brand building.",
+  },
+  alternates: {
+    canonical: "https://importnow.in/services",
+  },
 };
 
 const services = [
@@ -100,8 +129,57 @@ const categories = [
 ];
 
 export default function ServicesPage() {
+  const baseUrl = "https://importnow.in";
+  const pageUrl = `${baseUrl}/services`;
+
+  // Breadcrumb structured data
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Home", url: baseUrl },
+    { name: "Services", url: pageUrl },
+  ]);
+
+  // WebPage structured data
+  const webPageSchema = generateWebPageSchema({
+    name: "Our Services - ImportNow",
+    description:
+      "Comprehensive import services from China to India: product sourcing, quality inspection, logistics, customs clearance, and brand building.",
+    url: pageUrl,
+    breadcrumb: [
+      { name: "Home", url: baseUrl },
+      { name: "Services", url: pageUrl },
+    ],
+  });
+
+  // Service structured data for main service
+  const serviceSchema = generateServiceSchema(
+    "China to India Import Services",
+    "Comprehensive import services including product sourcing, quality inspection, logistics, customs clearance, and brand building.",
+    pageUrl,
+    "ImportNow"
+  );
+
   return (
     <>
+      {/* Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(webPageSchema),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(serviceSchema),
+        }}
+      />
+
       {/* Hero Section */}
       <section className="bg-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-[0.03]">

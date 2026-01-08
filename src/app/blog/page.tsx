@@ -3,11 +3,37 @@ import { BookOpen, ArrowRight, Calendar, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Link from "next/link";
+import {
+  generateWebPageSchema,
+  generateBreadcrumbSchema,
+} from "@/lib/structured-data";
 
 export const metadata: Metadata = {
-  title: "Blog - Insights on China-India Imports",
+  title: "Blog - Insights on China-India Imports | ImportNow",
   description:
     "Expert insights, guides, and tips on importing from China to India. Learn about sourcing, quality control, logistics, and growing your import business.",
+  keywords: [
+    "China import blog",
+    "importing guide",
+    "sourcing tips",
+    "import business",
+  ],
+  openGraph: {
+    title: "Blog - Insights on China-India Imports | ImportNow",
+    description:
+      "Expert insights, guides, and tips on importing from China to India.",
+    url: "https://importnow.in/blog",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Blog - Insights on China-India Imports | ImportNow",
+    description:
+      "Expert insights, guides, and tips on importing from China to India.",
+  },
+  alternates: {
+    canonical: "https://importnow.in/blog",
+  },
 };
 
 const featuredPost = {
@@ -89,8 +115,43 @@ const categories = [
 ];
 
 export default function BlogPage() {
+  const baseUrl = "https://importnow.in";
+  const pageUrl = `${baseUrl}/blog`;
+
+  // Breadcrumb structured data
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Home", url: baseUrl },
+    { name: "Blog", url: pageUrl },
+  ]);
+
+  // WebPage structured data
+  const webPageSchema = generateWebPageSchema({
+    name: "Blog - ImportNow",
+    description:
+      "Expert insights, guides, and tips on importing from China to India.",
+    url: pageUrl,
+    breadcrumb: [
+      { name: "Home", url: baseUrl },
+      { name: "Blog", url: pageUrl },
+    ],
+  });
+
   return (
     <>
+      {/* Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(webPageSchema),
+        }}
+      />
+
       {/* Hero Section */}
       <section className="bg-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-[0.03]">

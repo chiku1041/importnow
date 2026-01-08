@@ -3,11 +3,37 @@ import { HelpCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { FAQAccordion } from "@/components/faq/FAQAccordion";
+import {
+  generateWebPageSchema,
+  generateBreadcrumbSchema,
+} from "@/lib/structured-data";
 
 export const metadata: Metadata = {
-  title: "Frequently Asked Questions",
+  title: "Frequently Asked Questions - ImportNow FAQ",
   description:
     "Find answers to common questions about importing from China to India with ImportNow. Learn about our services, OnePrice, shipping, customs, and more.",
+  keywords: [
+    "import FAQ",
+    "China import questions",
+    "importing from China",
+    "customs clearance FAQ",
+  ],
+  openGraph: {
+    title: "Frequently Asked Questions - ImportNow",
+    description:
+      "Find answers to common questions about importing from China to India with ImportNow.",
+    url: "https://importnow.in/faq",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Frequently Asked Questions - ImportNow",
+    description:
+      "Find answers to common questions about importing from China to India with ImportNow.",
+  },
+  alternates: {
+    canonical: "https://importnow.in/faq",
+  },
 };
 
 const faqs = [
@@ -154,8 +180,65 @@ const faqs = [
 ];
 
 export default function FAQPage() {
+  const baseUrl = "https://importnow.in";
+  const pageUrl = `${baseUrl}/faq`;
+
+  // Breadcrumb structured data
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Home", url: baseUrl },
+    { name: "FAQ", url: pageUrl },
+  ]);
+
+  // WebPage structured data
+  const webPageSchema = generateWebPageSchema({
+    name: "Frequently Asked Questions - ImportNow",
+    description:
+      "Find answers to common questions about importing from China to India with ImportNow.",
+    url: pageUrl,
+    breadcrumb: [
+      { name: "Home", url: baseUrl },
+      { name: "FAQ", url: pageUrl },
+    ],
+  });
+
+  // FAQPage structured data
+  const faqPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.flatMap((category) =>
+      category.questions.map((faq) => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: faq.answer,
+        },
+      }))
+    ),
+  };
+
   return (
     <>
+      {/* Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(webPageSchema),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(faqPageSchema),
+        }}
+      />
+
       {/* Hero Section */}
       <section className="bg-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-[0.03]">

@@ -3,6 +3,12 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useEffect, useRef, useState } from "react";
+import Script from "next/script";
+import {
+  generateWebPageSchema,
+  generateBreadcrumbSchema,
+  generateServiceSchema,
+} from "@/lib/structured-data";
 import {
   Check,
   Clock,
@@ -45,8 +51,57 @@ export default function OnePricePage() {
     setActiveFaq(activeFaq === index ? null : index);
   };
 
+  const baseUrl = "https://importnow.in";
+  const pageUrl = `${baseUrl}/oneprice`;
+
+  // Breadcrumb structured data
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Home", url: baseUrl },
+    { name: "OnePrice", url: pageUrl },
+  ]);
+
+  // WebPage structured data
+  const webPageSchema = generateWebPageSchema({
+    name: "OnePrice - Simplified Import Service | ImportNow",
+    description:
+      "Import Simplified. One Price. Zero Hassle. Fixed per-kg rate for small shipments from China to India—no negotiations, no surprises.",
+    url: pageUrl,
+    breadcrumb: [
+      { name: "Home", url: baseUrl },
+      { name: "OnePrice", url: pageUrl },
+    ],
+  });
+
+  // Service structured data
+  const serviceSchema = generateServiceSchema(
+    "OnePrice - Simplified Import Service",
+    "Fixed per-kg rate for small shipments from China to India. All-inclusive pricing with no hidden fees.",
+    pageUrl,
+    "ImportNow"
+  );
+
   return (
     <>
+      {/* Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(webPageSchema),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(serviceSchema),
+        }}
+      />
+
       {/* Hero Section */}
       <section className="pt-20 md:pt-36 pb-6 md:pb-24 px-4 md:px-8 bg-gradient-to-b from-[#f8fafc] to-white overflow-hidden">
         <div className="max-w-7xl mx-auto">

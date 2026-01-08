@@ -1,15 +1,71 @@
 import { Metadata } from "next";
 import { Shield } from "lucide-react";
+import {
+  generateWebPageSchema,
+  generateBreadcrumbSchema,
+} from "@/lib/structured-data";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy",
+  title: "Privacy Policy - ImportNow",
   description:
     "ImportNow's privacy policy - how we collect, use, and protect your personal information.",
+  keywords: ["privacy policy", "data protection", "privacy"],
+  openGraph: {
+    title: "Privacy Policy - ImportNow",
+    description:
+      "ImportNow's privacy policy - how we collect, use, and protect your personal information.",
+    url: "https://importnow.in/privacy",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Privacy Policy - ImportNow",
+    description:
+      "ImportNow's privacy policy - how we collect, use, and protect your personal information.",
+  },
+  alternates: {
+    canonical: "https://importnow.in/privacy",
+  },
 };
 
 export default function PrivacyPage() {
+  const baseUrl = "https://importnow.in";
+  const pageUrl = `${baseUrl}/privacy`;
+
+  // Breadcrumb structured data
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Home", url: baseUrl },
+    { name: "Privacy Policy", url: pageUrl },
+  ]);
+
+  // WebPage structured data
+  const webPageSchema = generateWebPageSchema({
+    name: "Privacy Policy - ImportNow",
+    description:
+      "ImportNow's privacy policy - how we collect, use, and protect your personal information.",
+    url: pageUrl,
+    breadcrumb: [
+      { name: "Home", url: baseUrl },
+      { name: "Privacy Policy", url: pageUrl },
+    ],
+  });
+
   return (
     <>
+      {/* Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(webPageSchema),
+        }}
+      />
+
       {/* Hero Section */}
       <section className="bg-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-[0.03]">

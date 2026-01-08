@@ -3,11 +3,37 @@ import { Truck, Clock, Package, MapPin, AlertCircle, Check } from "lucide-react"
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import {
+  generateWebPageSchema,
+  generateBreadcrumbSchema,
+} from "@/lib/structured-data";
 
 export const metadata: Metadata = {
-  title: "Shipping Policy",
+  title: "Shipping Policy - ImportNow",
   description:
     "ImportNow's shipping policy - timelines, costs, tracking, and delivery information for China to India imports.",
+  keywords: [
+    "shipping policy",
+    "China to India shipping",
+    "freight forwarding",
+    "delivery timeline",
+  ],
+  openGraph: {
+    title: "Shipping Policy - ImportNow",
+    description:
+      "ImportNow's shipping policy - timelines, costs, tracking, and delivery information for China to India imports.",
+    url: "https://importnow.in/shipping",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Shipping Policy - ImportNow",
+    description:
+      "ImportNow's shipping policy - timelines, costs, tracking, and delivery information.",
+  },
+  alternates: {
+    canonical: "https://importnow.in/shipping",
+  },
 };
 
 const shippingMethods = [
@@ -35,8 +61,43 @@ const shippingMethods = [
 ];
 
 export default function ShippingPage() {
+  const baseUrl = "https://importnow.in";
+  const pageUrl = `${baseUrl}/shipping`;
+
+  // Breadcrumb structured data
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Home", url: baseUrl },
+    { name: "Shipping Policy", url: pageUrl },
+  ]);
+
+  // WebPage structured data
+  const webPageSchema = generateWebPageSchema({
+    name: "Shipping Policy - ImportNow",
+    description:
+      "ImportNow's shipping policy - timelines, costs, tracking, and delivery information for China to India imports.",
+    url: pageUrl,
+    breadcrumb: [
+      { name: "Home", url: baseUrl },
+      { name: "Shipping Policy", url: pageUrl },
+    ],
+  });
+
   return (
     <>
+      {/* Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(webPageSchema),
+        }}
+      />
+
       {/* Hero Section */}
       <section className="bg-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-[0.03]">

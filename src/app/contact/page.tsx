@@ -1,11 +1,36 @@
 import { Metadata } from "next";
 import { Mail, Phone, MapPin, MessageCircle, Clock } from "lucide-react";
 import { ContactForm } from "@/components/contact/ContactForm";
+import {
+  generateWebPageSchema,
+  generateBreadcrumbSchema,
+} from "@/lib/structured-data";
 
 export const metadata: Metadata = {
-  title: "Contact Us",
+  title: "Contact Us - Get Free Quote | ImportNow",
   description:
     "Get in touch with ImportNow for a free quote on China to India imports. We're here to answer your questions and help you get started.",
+  keywords: [
+    "contact ImportNow",
+    "free quote import",
+    "China import consultation",
+  ],
+  openGraph: {
+    title: "Contact Us - ImportNow",
+    description:
+      "Get in touch with ImportNow for a free quote on China to India imports. We're here to answer your questions and help you get started.",
+    url: "https://importnow.in/contact",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Contact Us - ImportNow",
+    description:
+      "Get in touch with ImportNow for a free quote on China to India imports.",
+  },
+  alternates: {
+    canonical: "https://importnow.in/contact",
+  },
 };
 
 const contactInfo = [
@@ -36,8 +61,43 @@ const contactInfo = [
 ];
 
 export default function ContactPage() {
+  const baseUrl = "https://importnow.in";
+  const pageUrl = `${baseUrl}/contact`;
+
+  // Breadcrumb structured data
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Home", url: baseUrl },
+    { name: "Contact Us", url: pageUrl },
+  ]);
+
+  // WebPage structured data
+  const webPageSchema = generateWebPageSchema({
+    name: "Contact Us - ImportNow",
+    description:
+      "Get in touch with ImportNow for a free quote on China to India imports.",
+    url: pageUrl,
+    breadcrumb: [
+      { name: "Home", url: baseUrl },
+      { name: "Contact Us", url: pageUrl },
+    ],
+  });
+
   return (
     <>
+      {/* Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(webPageSchema),
+        }}
+      />
+
       {/* Hero Section */}
       <section className="bg-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-[0.03]">
