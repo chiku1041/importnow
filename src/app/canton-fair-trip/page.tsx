@@ -3,10 +3,10 @@ import { ChinaTripHero } from "@/components/china-trip/ChinaTripHero";
 import { WhoThisTripIsFor } from "@/components/china-trip/WhoThisTripIsFor";
 import { WhyThisTripExists } from "@/components/china-trip/WhyThisTripExists";
 import { YourGuideSection } from "@/components/china-trip/YourGuideSection";
-import { DayByDayItinerary } from "@/components/china-trip/DayByDayItinerary";
+import { UnbeatableValue } from "@/components/china-trip/UnbeatableValue";
 import { WhatYouWillLearn } from "@/components/china-trip/WhatYouWillLearn";
 import { ShenzhenElectronicsHub } from "@/components/china-trip/ShenzhenElectronicsHub";
-import { WhatsIncluded } from "@/components/china-trip/WhatsIncluded";
+import { WhatsIncludedCanton } from "@/components/china-trip/WhatsIncludedCanton";
 import { GroupSizeUSP } from "@/components/china-trip/GroupSizeUSP";
 import { FinalCTASection } from "@/components/china-trip/FinalCTASection";
 import { Disclaimers } from "@/components/china-trip/Disclaimers";
@@ -45,10 +45,10 @@ export default function CantonFairTripPage() {
       <WhoThisTripIsFor />
       <WhyThisTripExists />
       <YourGuideSection />
-      <DayByDayItinerary />
+      <UnbeatableValue />
+      <WhatsIncludedCanton />
       <WhatYouWillLearn />
       <ShenzhenElectronicsHub />
-      <WhatsIncluded />
       <GroupSizeUSP />
       <FinalCTASection whatsappLink={whatsappLink} />
       <Disclaimers />

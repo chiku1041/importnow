@@ -85,11 +85,6 @@ export function ShenzhenElectronicsHub() {
                 </span>
                 .
               </p>
-              <p>
-                We'll also visit nearby factories to see production lines in
-                action, giving you a complete picture of the electronics
-                manufacturing process.
-              </p>
             </div>
           </div>
         </div>

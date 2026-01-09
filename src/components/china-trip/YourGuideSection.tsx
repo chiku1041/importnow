@@ -6,7 +6,7 @@ import Image from "next/image";
 
 const stats = [
   { number: "1,000+", label: "shipments handled" },
-  { number: "5+", label: "years on-ground China experience" },
+  { number: "4+", label: "years on-ground China experience" },
   { number: "200+", label: "factory relationships" },
 ];
 

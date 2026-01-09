@@ -36,21 +36,14 @@ export function GroupSizeUSP() {
                 : "opacity-0 scale-95"
             }`}
           >
-            {/* Large Number Visual */}
-            <div className="inline-flex items-center justify-center w-28 h-28 lg:w-32 lg:h-32 rounded-full bg-[#F8FAFC] border-[3px] border-[#C53030] mb-6">
-              <span className="text-5xl lg:text-6xl font-semibold text-[#0F172A]">
-                10
-              </span>
-            </div>
-
             <h2 className="text-[28px] sm:text-[32px] font-semibold text-[#0F172A] mb-4">
               Small Group, Real Learning
             </h2>
             <p className="text-[17px] lg:text-lg text-[#334155] leading-relaxed max-w-xl mx-auto">
-              We limit each trip to 10 participants. This ensures personalized
-              attention, meaningful supplier interactions, and a focused
-              learning environment. No large tour groups. No rushed factory
-              visits. Just serious business learning.
+              We keep the group small. This ensures personalized attention,
+              meaningful supplier interactions, and a focused learning
+              environment. No large tour groups. No rushed visits. Just serious
+              business learning.
             </p>
           </div>
         </div>
