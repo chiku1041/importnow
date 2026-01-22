@@ -20,3 +20,4 @@ SELECT id, title, description, image_url, "order", created_at
 FROM gallery_images
 ORDER BY "order" ASC;
 
+
