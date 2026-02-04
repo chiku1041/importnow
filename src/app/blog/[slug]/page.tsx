@@ -74,6 +74,14 @@ function extractHeadings(content: string): TOCItem[] {
 // Convert markdown to HTML with IDs on headings
 function markdownToHtml(content: string): string {
   let html = content
+    // Convert markdown images: ![alt text](url)
+    .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_, alt, url) => {
+      return `<figure class="my-8"><img src="${url}" alt="${alt}" class="w-full rounded-lg shadow-md" loading="lazy" />${alt ? `<figcaption class="text-center text-sm text-gray-500 mt-2">${alt}</figcaption>` : ''}</figure>`;
+    })
+    // Convert standalone image URLs (URLs ending with image extensions on their own line)
+    .replace(/^(https?:\/\/[^\s]+\.(?:jpg|jpeg|png|gif|webp|svg|bmp|avif))$/gim, (_, url) => {
+      return `<figure class="my-8"><img src="${url}" alt="" class="w-full rounded-lg shadow-md" loading="lazy" /></figure>`;
+    })
     // Convert H2 headings
     .replace(/^## (.+)$/gm, (_, text) => {
       const id = slugify(text);
@@ -84,8 +92,8 @@ function markdownToHtml(content: string): string {
       const id = slugify(text);
       return `<h3 id="${id}" class="scroll-mt-24 text-xl font-bold text-[#0B1F33] mt-8 mb-4">${text}</h3>`;
     })
-    // Convert paragraphs
-    .replace(/^(?!<h[23]|<ul|<li|-\s)(.+)$/gm, '<p class="text-gray-700 leading-relaxed mb-4">$1</p>')
+    // Convert paragraphs (exclude figure tags now)
+    .replace(/^(?!<h[23]|<ul|<li|<figure|-\s)(.+)$/gm, '<p class="text-gray-700 leading-relaxed mb-4">$1</p>')
     // Convert list items
     .replace(/^-\s+(.+)$/gm, '<li class="text-gray-700 ml-4">$1</li>')
     // Wrap consecutive list items in ul
