@@ -102,9 +102,9 @@ function markdownToHtml(content: string): string {
     return `<h${level}${attrs} id="${id}">${inner}</h${level}>`;
   });
 
-  // Convert bare URLs (not already inside an <a> tag) into clickable links
+  // Convert bare URLs (not already inside an HTML attribute or tag) into clickable links
   html = html.replace(
-    /(?<!href="|">)(https?:\/\/[^\s<)"]+)/g,
+    /(?<!href="|src="|">|=")(https?:\/\/[^\s<)"]+)/g,
     '<a href="$1">$1</a>'
   );
 
