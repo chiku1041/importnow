@@ -7,6 +7,24 @@ import { Card } from "@/components/ui/card";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 
+// Strip markdown syntax from text for clean plain-text display
+function stripMarkdown(text: string): string {
+  return text
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")   // [text](url) → text
+    .replace(/!\[([^\]]*)\]\([^)]+\)/g, "$1")   // ![alt](url) → alt
+    .replace(/(\*\*|__)(.*?)\1/g, "$2")          // **bold** / __bold__ → bold
+    .replace(/(\*|_)(.*?)\1/g, "$2")             // *italic* / _italic_ → italic
+    .replace(/~~(.*?)~~/g, "$1")                 // ~~strikethrough~~ → text
+    .replace(/`{1,3}([^`]+)`{1,3}/g, "$1")      // `code` → code
+    .replace(/^#{1,6}\s+/gm, "")                 // ## heading → heading
+    .replace(/^>\s+/gm, "")                      // > blockquote → text
+    .replace(/^[-*+]\s+/gm, "")                  // - list item → list item
+    .replace(/^\d+\.\s+/gm, "")                  // 1. ordered → ordered
+    .replace(/\n{2,}/g, " ")                     // multiple newlines → space
+    .replace(/\n/g, " ")                         // single newlines → space
+    .trim();
+}
+
 // Types
 interface BlogPost {
   id: string;
@@ -168,7 +186,7 @@ export default function BlogPage() {
                       {featuredPost.title}
                     </h3>
 
-                    <p className="text-[#666666] mb-6">{featuredPost.excerpt}</p>
+                    <p className="text-[#666666] mb-6">{stripMarkdown(featuredPost.excerpt)}</p>
 
                     <div className="flex items-center gap-4 text-sm text-[#888888] mb-6">
                       <span className="flex items-center gap-1">
@@ -278,7 +296,7 @@ export default function BlogPage() {
 
                         {/* Excerpt */}
                         <p className="text-sm text-[#666666] mb-4 line-clamp-3 flex-1">
-                          {post.excerpt}
+                          {stripMarkdown(post.excerpt)}
                         </p>
 
                         {/* Meta */}

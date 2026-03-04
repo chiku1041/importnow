@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { marked } from "marked";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -19,6 +20,24 @@ import {
   Send,
   Loader2,
 } from "lucide-react";
+
+// Strip markdown syntax from text for clean plain-text display
+function stripMarkdown(text: string): string {
+  return text
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")   // [text](url) → text
+    .replace(/!\[([^\]]*)\]\([^)]+\)/g, "$1")   // ![alt](url) → alt
+    .replace(/(\*\*|__)(.*?)\1/g, "$2")          // **bold** / __bold__ → bold
+    .replace(/(\*|_)(.*?)\1/g, "$2")             // *italic* / _italic_ → italic
+    .replace(/~~(.*?)~~/g, "$1")                 // ~~strikethrough~~ → text
+    .replace(/`{1,3}([^`]+)`{1,3}/g, "$1")      // `code` → code
+    .replace(/^#{1,6}\s+/gm, "")                 // ## heading → heading
+    .replace(/^>\s+/gm, "")                      // > blockquote → text
+    .replace(/^[-*+]\s+/gm, "")                  // - list item → list item
+    .replace(/^\d+\.\s+/gm, "")                  // 1. ordered → ordered
+    .replace(/\n{2,}/g, " ")                     // multiple newlines → space
+    .replace(/\n/g, " ")                         // single newlines → space
+    .trim();
+}
 
 // Types
 interface BlogPost {
@@ -71,77 +90,29 @@ function extractHeadings(content: string): TOCItem[] {
   return headings;
 }
 
-// Convert markdown to HTML with IDs on headings
+// Convert markdown to HTML using the marked library
 function markdownToHtml(content: string): string {
-  // Normalize line endings (handle Windows CRLF)
-  let html = content.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
-  
-  // STEP 1: Convert block-level list items FIRST (before inline formatting)
-  // This prevents * bullet markers from interfering with **bold** and *italic*
-  
-  // Convert numbered list items (1. 2. 3. etc)
-  html = html.replace(/^(\d+)\.\s+(.+)$/gm, '<li class="text-gray-700 ml-4" data-list="ol" value="$1">$2</li>');
-  
-  // Convert bullet list items (-, *, •)
-  html = html.replace(/^[-*•]\s+(.+)$/gm, '<li class="text-gray-700 ml-4" data-list="ul">$1</li>');
-  
-  // STEP 2: Convert images BEFORE links (so ![alt](url) is consumed before [text](url))
-  
-  // Convert markdown images: ![alt text](url)
-  html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_, alt, url) => {
-    return `<figure class="my-8"><img src="${url}" alt="${alt}" class="w-full rounded-lg shadow-md" loading="lazy" />${alt ? `<figcaption class="text-center text-sm text-gray-500 mt-2">${alt}</figcaption>` : ''}</figure>`;
+  // Parse markdown to proper HTML using marked (handles bold, links, lists, etc. correctly)
+  let html = marked.parse(content, { async: false, gfm: true, breaks: true }) as string;
+
+  // Add IDs to h2 and h3 headings for table of contents navigation
+  html = html.replace(/<h([23])([^>]*)>([\s\S]*?)<\/h[23]>/g, (_match, level, attrs, inner) => {
+    const rawText = inner.replace(/<[^>]*>/g, "");
+    const id = slugify(rawText);
+    return `<h${level}${attrs} id="${id}">${inner}</h${level}>`;
   });
-  
-  // Convert standalone image URLs (URLs containing image extensions, on their own line)
-  html = html.replace(/^(https?:\/\/[^\s]+\.(?:jpg|jpeg|png|gif|webp|svg|bmp|avif)(?:\?[^\s]*)?)\s*$/gim, (_, url) => {
-    return `<figure class="my-8"><img src="${url}" alt="" class="w-full rounded-lg shadow-md" loading="lazy" /></figure>`;
-  });
-  
-  // STEP 3: Convert inline formatting (bold, italic, code, links)
-  // These run globally and process content everywhere, including inside <li> elements
-  
-  // Convert bold text **text** to <strong> (use [\s\S] instead of . with s flag for ES2017 compat)
-  html = html.replace(/\*\*([\s\S]+?)\*\*/g, '<strong class="font-bold text-[#0B1F33]">$1</strong>');
-  
-  // Convert italic text *text* to <em> (single asterisks, not double)
-  // Avoid lookbehind for ES2017 compat — match word boundary or non-* before opening *
-  html = html.replace(/(^|[^*])\*([^*\n]+)\*(?!\*)/g, '$1<em>$2</em>');
-  
-  // Convert inline code `code` to <code>
-  html = html.replace(/`([^`]+)`/g, '<code class="bg-gray-100 px-1.5 py-0.5 rounded text-sm font-mono text-[#0B1F33]">$1</code>');
-  
-  // Convert links [text](url) to <a>
-  html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-[#C56A2D] underline hover:text-[#A85A24] transition-colors" target="_blank" rel="noopener noreferrer">$1</a>');
-  
-  // STEP 4: Convert block elements (headings)
-  
-  // Convert H3 headings (process before H2 so ### isn't matched by ##)
-  html = html.replace(/^### (.+)$/gm, (_, text) => {
-    const id = slugify(text.replace(/<[^>]*>/g, '')); // Remove HTML tags for ID
-    return `<h3 id="${id}" class="scroll-mt-24 text-xl font-bold text-[#0B1F33] mt-8 mb-4">${text}</h3>`;
-  });
-  
-  // Convert H2 headings
-  html = html.replace(/^## (.+)$/gm, (_, text) => {
-    const id = slugify(text.replace(/<[^>]*>/g, '')); // Remove HTML tags for ID
-    return `<h2 id="${id}" class="scroll-mt-24 text-2xl font-bold text-[#0B1F33] mt-12 mb-6">${text}</h2>`;
-  });
-  
-  // STEP 5: Wrap consecutive list items in <ol>/<ul>
-  // Use [\s\S]*? (lazy) instead of [^<]* to allow HTML tags inside <li>
-  
-  // Wrap consecutive ordered list items in <ol>
-  html = html.replace(/(<li class="text-gray-700 ml-4" data-list="ol"[^>]*>[\s\S]*?<\/li>\n?)+/g, (match) => 
-    `<ol class="list-decimal pl-6 mb-4 space-y-2">${match}</ol>`
+
+  // Convert bare URLs (not already inside an <a> tag) into clickable links
+  html = html.replace(
+    /(?<!href="|">)(https?:\/\/[^\s<)"]+)/g,
+    '<a href="$1">$1</a>'
   );
-  
-  // Wrap consecutive unordered list items in <ul>
-  html = html.replace(/(<li class="text-gray-700 ml-4" data-list="ul">[\s\S]*?<\/li>\n?)+/g, (match) => 
-    `<ul class="list-disc pl-6 mb-4 space-y-2">${match}</ul>`
+
+  // Make all links open in new tabs and ensure they are clickable
+  html = html.replace(
+    /<a\s+(?!target=)([^>]*?)href="/g,
+    '<a target="_blank" rel="noopener noreferrer" $1href="'
   );
-  
-  // STEP 6: Convert paragraphs (exclude already processed elements)
-  html = html.replace(/^(?!<h[23]|<ul|<ol|<li|<figure|<p)(.+)$/gm, '<p class="text-gray-700 leading-relaxed mb-4">$1</p>');
 
   return html;
 }
@@ -358,15 +329,15 @@ export default function BlogPostPage() {
 
           {/* Excerpt */}
           <p className="text-lg md:text-xl text-white/90 mb-6 max-w-3xl line-clamp-2">
-            {post.excerpt}
+            {stripMarkdown(post.excerpt)}
           </p>
 
           {/* Meta */}
           <div className="flex flex-wrap items-center gap-4 text-white/80 mb-6">
             <span>Written by {post.author}</span>
-            <span className="hidden sm:inline">•</span>
+            <span className="hidden sm:inline">&bull;</span>
             <span>Published on {formatDate(post.published_at)}</span>
-            <span className="hidden sm:inline">•</span>
+            <span className="hidden sm:inline">&bull;</span>
             <span>{post.read_time}</span>
           </div>
 
@@ -519,7 +490,7 @@ export default function BlogPostPage() {
             <article className="lg:col-span-9">
               <div
                 ref={contentRef}
-                className="prose prose-lg max-w-none"
+                className="blog-content"
                 dangerouslySetInnerHTML={{ __html: htmlContent }}
               />
 
