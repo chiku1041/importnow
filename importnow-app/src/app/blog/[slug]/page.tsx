@@ -76,8 +76,31 @@ function markdownToHtml(content: string): string {
   // Normalize line endings (handle Windows CRLF)
   let html = content.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
   
-  // FIRST: Convert inline formatting (bold, italic, code) before block elements
-  // Convert bold text **text** to <strong> - handles multiline and various content
+  // STEP 1: Convert block-level list items FIRST (before inline formatting)
+  // This prevents * bullet markers from interfering with **bold** and *italic*
+  
+  // Convert numbered list items (1. 2. 3. etc)
+  html = html.replace(/^(\d+)\.\s+(.+)$/gm, '<li class="text-gray-700 ml-4" data-list="ol" value="$1">$2</li>');
+  
+  // Convert bullet list items (-, *, •)
+  html = html.replace(/^[-*•]\s+(.+)$/gm, '<li class="text-gray-700 ml-4" data-list="ul">$1</li>');
+  
+  // STEP 2: Convert images BEFORE links (so ![alt](url) is consumed before [text](url))
+  
+  // Convert markdown images: ![alt text](url)
+  html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_, alt, url) => {
+    return `<figure class="my-8"><img src="${url}" alt="${alt}" class="w-full rounded-lg shadow-md" loading="lazy" />${alt ? `<figcaption class="text-center text-sm text-gray-500 mt-2">${alt}</figcaption>` : ''}</figure>`;
+  });
+  
+  // Convert standalone image URLs (URLs containing image extensions, on their own line)
+  html = html.replace(/^(https?:\/\/[^\s]+\.(?:jpg|jpeg|png|gif|webp|svg|bmp|avif)(?:\?[^\s]*)?)\s*$/gim, (_, url) => {
+    return `<figure class="my-8"><img src="${url}" alt="" class="w-full rounded-lg shadow-md" loading="lazy" /></figure>`;
+  });
+  
+  // STEP 3: Convert inline formatting (bold, italic, code, links)
+  // These run globally and process content everywhere, including inside <li> elements
+  
+  // Convert bold text **text** to <strong>
   html = html.replace(/\*\*(.+?)\*\*/gs, '<strong class="font-bold text-[#0B1F33]">$1</strong>');
   
   // Convert italic text *text* to <em> (single asterisks, not double)
@@ -86,19 +109,15 @@ function markdownToHtml(content: string): string {
   // Convert inline code `code` to <code>
   html = html.replace(/`([^`]+)`/g, '<code class="bg-gray-100 px-1.5 py-0.5 rounded text-sm font-mono text-[#0B1F33]">$1</code>');
   
-  // Convert links [text](url) to <a> - but not image links which start with !
-  html = html.replace(/(?<!!)\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-[#C56A2D] underline hover:text-[#A85A24] transition-colors" target="_blank" rel="noopener noreferrer">$1</a>');
+  // Convert links [text](url) to <a>
+  html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-[#C56A2D] underline hover:text-[#A85A24] transition-colors" target="_blank" rel="noopener noreferrer">$1</a>');
   
-  // THEN: Convert block elements
-  // Convert markdown images: ![alt text](url)
-  html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_, alt, url) => {
-    return `<figure class="my-8"><img src="${url}" alt="${alt}" class="w-full rounded-lg shadow-md" loading="lazy" />${alt ? `<figcaption class="text-center text-sm text-gray-500 mt-2">${alt}</figcaption>` : ''}</figure>`;
-  });
+  // STEP 4: Convert block elements (headings)
   
-  // Convert standalone image URLs (URLs containing image extensions, on their own line)
-  // Handles URLs with query parameters and trailing whitespace
-  html = html.replace(/^(https?:\/\/[^\s]+\.(?:jpg|jpeg|png|gif|webp|svg|bmp|avif)(?:\?[^\s]*)?)\s*$/gim, (_, url) => {
-    return `<figure class="my-8"><img src="${url}" alt="" class="w-full rounded-lg shadow-md" loading="lazy" /></figure>`;
+  // Convert H3 headings (process before H2 so ### isn't matched by ##)
+  html = html.replace(/^### (.+)$/gm, (_, text) => {
+    const id = slugify(text.replace(/<[^>]*>/g, '')); // Remove HTML tags for ID
+    return `<h3 id="${id}" class="scroll-mt-24 text-xl font-bold text-[#0B1F33] mt-8 mb-4">${text}</h3>`;
   });
   
   // Convert H2 headings
@@ -107,29 +126,20 @@ function markdownToHtml(content: string): string {
     return `<h2 id="${id}" class="scroll-mt-24 text-2xl font-bold text-[#0B1F33] mt-12 mb-6">${text}</h2>`;
   });
   
-  // Convert H3 headings
-  html = html.replace(/^### (.+)$/gm, (_, text) => {
-    const id = slugify(text.replace(/<[^>]*>/g, '')); // Remove HTML tags for ID
-    return `<h3 id="${id}" class="scroll-mt-24 text-xl font-bold text-[#0B1F33] mt-8 mb-4">${text}</h3>`;
-  });
+  // STEP 5: Wrap consecutive list items in <ol>/<ul>
+  // Use [\s\S]*? (lazy) instead of [^<]* to allow HTML tags inside <li>
   
-  // Convert numbered list items (1. 2. 3. etc)
-  html = html.replace(/^(\d+)\.\s+(.+)$/gm, '<li class="text-gray-700 ml-4" value="$1">$2</li>');
-  
-  // Convert bullet list items (-)
-  html = html.replace(/^-\s+(.+)$/gm, '<li class="text-gray-700 ml-4">$1</li>');
-  
-  // Wrap consecutive numbered list items in ol
-  html = html.replace(/(<li class="text-gray-700 ml-4" value="\d+">[^<]*<\/li>\n?)+/g, (match) => 
+  // Wrap consecutive ordered list items in <ol>
+  html = html.replace(/(<li class="text-gray-700 ml-4" data-list="ol"[^>]*>[\s\S]*?<\/li>\n?)+/g, (match) => 
     `<ol class="list-decimal pl-6 mb-4 space-y-2">${match}</ol>`
   );
   
-  // Wrap consecutive bullet list items in ul
-  html = html.replace(/(<li class="text-gray-700 ml-4">[^<]*<\/li>\n?)+/g, (match) => 
+  // Wrap consecutive unordered list items in <ul>
+  html = html.replace(/(<li class="text-gray-700 ml-4" data-list="ul">[\s\S]*?<\/li>\n?)+/g, (match) => 
     `<ul class="list-disc pl-6 mb-4 space-y-2">${match}</ul>`
   );
   
-  // Convert paragraphs (exclude already processed elements)
+  // STEP 6: Convert paragraphs (exclude already processed elements)
   html = html.replace(/^(?!<h[23]|<ul|<ol|<li|<figure|<p)(.+)$/gm, '<p class="text-gray-700 leading-relaxed mb-4">$1</p>');
 
   return html;
