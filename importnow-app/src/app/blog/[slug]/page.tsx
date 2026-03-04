@@ -100,11 +100,12 @@ function markdownToHtml(content: string): string {
   // STEP 3: Convert inline formatting (bold, italic, code, links)
   // These run globally and process content everywhere, including inside <li> elements
   
-  // Convert bold text **text** to <strong>
-  html = html.replace(/\*\*(.+?)\*\*/gs, '<strong class="font-bold text-[#0B1F33]">$1</strong>');
+  // Convert bold text **text** to <strong> (use [\s\S] instead of . with s flag for ES2017 compat)
+  html = html.replace(/\*\*([\s\S]+?)\*\*/g, '<strong class="font-bold text-[#0B1F33]">$1</strong>');
   
   // Convert italic text *text* to <em> (single asterisks, not double)
-  html = html.replace(/(?<!\*)\*([^*\n]+)\*(?!\*)/g, '<em>$1</em>');
+  // Avoid lookbehind for ES2017 compat — match word boundary or non-* before opening *
+  html = html.replace(/(^|[^*])\*([^*\n]+)\*(?!\*)/g, '$1<em>$2</em>');
   
   // Convert inline code `code` to <code>
   html = html.replace(/`([^`]+)`/g, '<code class="bg-gray-100 px-1.5 py-0.5 rounded text-sm font-mono text-[#0B1F33]">$1</code>');
