@@ -4,6 +4,10 @@
   "main": ".open-next/worker.js",
   "compatibility_date": "2026-11-09",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  // Source maps from Next/OpenNext exceed Cloudflare's 15 MiB gzip upload limit.
+  "upload_source_maps": false,
+  "workers_dev": true,
+  "preview_urls": true,
   "assets": {
     "directory": ".open-next/assets",
     "binding": "ASSETS"
