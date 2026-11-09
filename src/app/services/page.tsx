@@ -18,11 +18,12 @@ import {
   generateBreadcrumbSchema,
   generateServiceSchema,
 } from "@/lib/structured-data";
+import { LocalBusinessSchema } from "@/components/seo/LocalBusinessSchema";
 
 export const metadata: Metadata = {
-  title: "Our Services - Product Sourcing, Quality Inspection & Logistics | ImportNow",
+  title: "Import Consulting Services — Sourcing, Inspection, Customs & Logistics | ImportNow",
   description:
-    "Comprehensive import services from China to India: product sourcing, quality inspection, logistics, customs clearance, and brand building. Modular solutions for your business needs.",
+    "Full-service import consulting from China to India. Product sourcing, supplier verification, quality inspection, freight forwarding, customs clearance, and brand building. Based in Hyderabad.",
   keywords: [
     "product sourcing China",
     "quality inspection services",
@@ -32,17 +33,17 @@ export const metadata: Metadata = {
     "factory visits China",
   ],
   openGraph: {
-    title: "Our Services - ImportNow",
+    title: "Import Consulting Services — Sourcing, Inspection, Customs & Logistics | ImportNow",
     description:
-      "Comprehensive import services from China to India: product sourcing, quality inspection, logistics, customs clearance, and brand building.",
+      "Full-service import consulting from China to India. Product sourcing, supplier verification, quality inspection, freight forwarding, customs clearance, and brand building. Based in Hyderabad.",
     url: "https://importnow.in/services",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Our Services - ImportNow",
+    title: "Import Consulting Services — Sourcing, Inspection, Customs & Logistics | ImportNow",
     description:
-      "Comprehensive import services from China to India: product sourcing, quality inspection, logistics, customs clearance, and brand building.",
+      "Full-service import consulting from China to India. Product sourcing, supplier verification, quality inspection, freight forwarding, customs clearance, and brand building. Based in Hyderabad.",
   },
   alternates: {
     canonical: "https://importnow.in/services",
@@ -140,9 +141,9 @@ export default function ServicesPage() {
 
   // WebPage structured data
   const webPageSchema = generateWebPageSchema({
-    name: "Our Services - ImportNow",
+    name: "Import Consulting Services — Sourcing, Inspection, Customs & Logistics | ImportNow",
     description:
-      "Comprehensive import services from China to India: product sourcing, quality inspection, logistics, customs clearance, and brand building.",
+      "Full-service import consulting from China to India. Product sourcing, supplier verification, quality inspection, freight forwarding, customs clearance, and brand building. Based in Hyderabad.",
     url: pageUrl,
     breadcrumb: [
       { name: "Home", url: baseUrl },
@@ -152,15 +153,18 @@ export default function ServicesPage() {
 
   // Service structured data for main service
   const serviceSchema = generateServiceSchema(
-    "China to India Import Services",
-    "Comprehensive import services including product sourcing, quality inspection, logistics, customs clearance, and brand building.",
+    "China to India Import Consulting",
+    "End-to-end import consulting from China to India including product sourcing, quality inspection, customs clearance, and logistics.",
     pageUrl,
-    "ImportNow"
+    "ImportNow",
+    "Import Consulting Services",
+    "India"
   );
 
   return (
     <>
       {/* Structured Data */}
+      <LocalBusinessSchema />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -200,12 +204,13 @@ export default function ServicesPage() {
             </div>
 
             <h1 className="text-4xl md:text-5xl font-bold text-[#1F2933] mb-6">
-              Comprehensive Support for Your{" "}
-              <span className="text-[#0B1F33]">Import Needs</span>
+              Import Consulting & Execution Services —{" "}
+              <span className="text-[#0B1F33]">China to India</span>
             </h1>
 
             <p className="text-xl text-[#666666] mb-8">
-              From sourcing to delivery, we provide modular services that adapt to 
+              Whether you&apos;re a startup in Hyderabad or a growing brand in Delhi or Mumbai, our services scale to your needs. 
+              From sourcing to delivery, we provide modular import export consulting services that adapt to 
               your requirements. Choose what you need, skip what you don&apos;t.
             </p>
 
@@ -411,6 +416,11 @@ export default function ServicesPage() {
             <p className="text-xl text-white/90 mb-8">
               Get a custom quote tailored to your specific import needs
             </p>
+            <div className="mb-8 text-white/90 text-center">
+              <p className="mb-2"><strong>Phone:</strong> <a href="tel:+919989724320" className="underline">+91 9989724320</a></p>
+              <p className="mb-2"><strong>Email:</strong> <a href="mailto:hello@Importnow.in" className="underline">hello@Importnow.in</a></p>
+              <p><strong>Offices:</strong> Hyderabad, India | Shenzhen, Guangzhou, Yiwu & Shanghai, China</p>
+            </div>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
                 size="lg"

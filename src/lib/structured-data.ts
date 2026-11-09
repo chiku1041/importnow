@@ -82,6 +82,16 @@ export function generateWebPageSchema(data: WebPageSchema) {
     name: data.name,
     description: data.description,
     url: data.url,
+    isPartOf: {
+      "@type": "WebSite",
+      name: "ImportNow",
+      url: "https://importnow.in",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "ImportNow",
+      url: "https://importnow.in",
+    },
     ...(data.breadcrumb && {
       breadcrumb: generateBreadcrumbSchema(data.breadcrumb),
     }),
@@ -117,18 +127,23 @@ export function generateServiceSchema(
   name: string,
   description: string,
   url: string,
-  provider: string
+  provider: string,
+  serviceType?: string,
+  areaServed?: string
 ) {
   return {
     "@context": "https://schema.org",
     "@type": "Service",
+    ...(serviceType && { serviceType }),
     name,
     description,
     url,
     provider: {
-      "@type": "Organization",
+      "@type": "LocalBusiness",
       name: provider,
+      url: "https://importnow.in",
     },
+    ...(areaServed && { areaServed }),
   };
 }
 

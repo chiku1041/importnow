@@ -1,6 +1,7 @@
 import { Mail, Phone, MapPin, Linkedin, Twitter, Facebook } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { GoogleMapEmbed } from "@/components/common/GoogleMapEmbed";
 
 const footerLinks = {
   company: [
@@ -52,18 +53,18 @@ export function Footer() {
             <div className="lg:col-span-1">
               <div className="space-y-3">
                 <a
-                  href="mailto:info@importnow.in"
+                  href="mailto:hello@Importnow.in"
                   className="flex items-center gap-3 text-[#C9D4E0] hover:text-[#C56A2D] transition-colors"
                 >
                   <Mail className="h-5 w-5 text-[#C56A2D]" />
-                  info@importnow.in
+                  hello@Importnow.in
                 </a>
                 <a
                   href="tel:+919989724320"
                   className="flex items-center gap-3 text-[#C9D4E0] hover:text-[#C56A2D] transition-colors"
                 >
                   <Phone className="h-5 w-5 text-[#C56A2D]" />
-                  +91 9989 724 320
+                  +91 9989724320
                 </a>
                 <a
                   href="tel:+8613025407345"
@@ -74,7 +75,7 @@ export function Footer() {
                 </a>
                 <div className="flex items-center gap-3 text-[#C9D4E0]">
                   <MapPin className="h-5 w-5 text-[#C56A2D]" />
-                  Hyderabad and Delhi, India
+                  Hyderabad, India
                 </div>
               </div>
             </div>
@@ -130,6 +131,11 @@ export function Footer() {
               </ul>
             </div>
           </div>
+        </div>
+
+        <div className="mt-8 lg:mt-10">
+          <h4 className="text-lg font-semibold mb-4 text-white">Find Us</h4>
+          <GoogleMapEmbed className="h-[200px] md:h-[250px] max-w-3xl" />
         </div>
 
         {/* Divider Line */}

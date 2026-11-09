@@ -7,11 +7,12 @@ import {
   generateWebPageSchema,
   generateBreadcrumbSchema,
 } from "@/lib/structured-data";
+import { LocalBusinessSchema } from "@/components/seo/LocalBusinessSchema";
 
 export const metadata: Metadata = {
-  title: "Frequently Asked Questions - ImportNow FAQ",
+  title: "Import from China FAQ — Common Questions Answered | ImportNow",
   description:
-    "Find answers to common questions about importing from China to India with ImportNow. Learn about our services, OnePrice, shipping, customs, and more.",
+    "Answers to common questions about importing from China to India. Sourcing, customs duties, shipping timelines, quality inspection, IEC requirements, and more.",
   keywords: [
     "import FAQ",
     "China import questions",
@@ -19,17 +20,17 @@ export const metadata: Metadata = {
     "customs clearance FAQ",
   ],
   openGraph: {
-    title: "Frequently Asked Questions - ImportNow",
+    title: "Import from China FAQ — Common Questions Answered | ImportNow",
     description:
-      "Find answers to common questions about importing from China to India with ImportNow.",
+      "Answers to common questions about importing from China to India. Sourcing, customs duties, shipping timelines, quality inspection, IEC requirements, and more.",
     url: "https://importnow.in/faq",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Frequently Asked Questions - ImportNow",
+    title: "Import from China FAQ — Common Questions Answered | ImportNow",
     description:
-      "Find answers to common questions about importing from China to India with ImportNow.",
+      "Answers to common questions about importing from China to India. Sourcing, customs duties, shipping timelines, quality inspection, IEC requirements, and more.",
   },
   alternates: {
     canonical: "https://importnow.in/faq",
@@ -191,9 +192,9 @@ export default function FAQPage() {
 
   // WebPage structured data
   const webPageSchema = generateWebPageSchema({
-    name: "Frequently Asked Questions - ImportNow",
+    name: "Import from China FAQ — Common Questions Answered | ImportNow",
     description:
-      "Find answers to common questions about importing from China to India with ImportNow.",
+      "Answers to common questions about importing from China to India. Sourcing, customs duties, shipping timelines, quality inspection, IEC requirements, and more.",
     url: pageUrl,
     breadcrumb: [
       { name: "Home", url: baseUrl },
@@ -220,6 +221,7 @@ export default function FAQPage() {
   return (
     <>
       {/* Structured Data */}
+      <LocalBusinessSchema />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{

@@ -16,7 +16,9 @@ CREATE TABLE IF NOT EXISTS blog_posts (
   excerpt TEXT NOT NULL,
   author TEXT NOT NULL DEFAULT 'Dinesh Seemakurthi',
   hero_image TEXT,
+  hero_image_alt TEXT,
   content TEXT NOT NULL,
+  faq JSONB NOT NULL DEFAULT '[]'::jsonb,
   category TEXT DEFAULT 'General',
   read_time TEXT DEFAULT '5 min read',
   is_featured BOOLEAN DEFAULT FALSE,
@@ -25,6 +27,10 @@ CREATE TABLE IF NOT EXISTS blog_posts (
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
+
+-- Migration for existing databases (safe to re-run)
+ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS hero_image_alt TEXT;
+ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS faq JSONB NOT NULL DEFAULT '[]'::jsonb;
 
 -- Enable Row Level Security (RLS)
 ALTER TABLE blog_posts ENABLE ROW LEVEL SECURITY;
@@ -116,7 +122,9 @@ INSERT INTO blog_posts (
   excerpt,
   author,
   hero_image,
+  hero_image_alt,
   content,
+  faq,
   category,
   read_time,
   is_featured,
@@ -128,6 +136,7 @@ INSERT INTO blog_posts (
   'Everything you need to know about starting your import journey — from finding suppliers to navigating customs and building lasting partnerships.',
   'Dinesh Seemakurthi',
   '/Gemini_Generated_Image_5a2lkj5a2lkj5a2l (1).png',
+  'Container ship at port representing China to India imports',
   '## Getting Started with China Imports
 
 Importing from China to India has become one of the most lucrative business opportunities for entrepreneurs and established businesses alike. With the right knowledge and approach, you can build a profitable import business that serves the growing Indian market.
@@ -226,6 +235,24 @@ As relationships develop, you can negotiate better payment terms such as:
 Importing from China to India offers tremendous opportunities for those willing to invest time in learning the process and building the right relationships. Start small, learn from each shipment, and gradually scale your operations as you gain experience and confidence.
 
 Remember, successful importing is a marathon, not a sprint. Focus on building sustainable practices that will serve your business well for years to come.',
+  '[
+    {
+      "question": "Do I need an IEC code to import from China to India?",
+      "answer": "Yes. An Import Export Code (IEC) from DGFT is mandatory for all commercial imports into India. Apply online at dgft.gov.in before your first shipment."
+    },
+    {
+      "question": "How long does shipping from China to India take?",
+      "answer": "Sea freight typically takes 18–30 days depending on the port pair. Air freight is faster at 5–10 days but costs significantly more."
+    },
+    {
+      "question": "What is the minimum order quantity when importing from China?",
+      "answer": "MOQ varies by product and factory. Consumer goods often start at 500–1,000 units, while custom or branded products may require 3,000+ units. Always confirm MOQ before placing an order."
+    },
+    {
+      "question": "How do I verify a Chinese supplier is legitimate?",
+      "answer": "Check their business license, request factory photos or a video tour, order a sample first, and consider a third-party pre-shipment inspection before paying the balance."
+    }
+  ]'::jsonb,
   'Getting Started',
   '15 min read',
   TRUE,
@@ -237,35 +264,72 @@ Remember, successful importing is a marathon, not a sprint. Focus on building su
 -- SETUP COMPLETE!
 -- ============================================
 -- 
--- HOW TO ADD A NEW BLOG POST:
--- 
--- 1. Go to Supabase Dashboard → Table Editor → blog_posts
--- 2. Click "Insert row"
--- 3. Fill in the fields:
---    - slug: URL-friendly identifier (e.g., "my-new-post")
---    - title: Your blog post title
---    - excerpt: Short description (1-2 sentences)
---    - author: Author name
---    - hero_image: Image path or URL
---    - content: Full article in Markdown format
---    - category: Post category
---    - read_time: Estimated read time
---    - is_featured: TRUE to show in featured section
---    - is_published: TRUE to make it visible on the website
---    - published_at: Publication date
--- 
+-- HOW TO ADD A NEW BLOG POST (SQL):
+--
+-- INSERT INTO blog_posts (
+--   slug,
+--   title,
+--   excerpt,
+--   author,
+--   hero_image,
+--   hero_image_alt,
+--   content,
+--   faq,
+--   category,
+--   read_time,
+--   is_featured,
+--   is_published,
+--   published_at
+-- ) VALUES (
+--   'your-post-slug-here',
+--   'Your Full Post Title Here',
+--   'One or two sentence summary for cards and SEO.',
+--   'Dinesh Kumar Mali',
+--   'https://....supabase.co/storage/v1/object/public/gallery/Hero.jpeg',
+--   'Short alt text describing the hero image',
+--   '## Opening Headline Here
+--
+-- Intro paragraph goes here.
+--
+-- ## Section Title
+--
+-- Section body text. Escape apostrophes as double quotes: it''s, you''ll.',
+--   '[
+--     {"question": "Your first FAQ question?", "answer": "Your answer here."},
+--     {"question": "Your second FAQ question?", "answer": "Another answer here."}
+--   ]'::jsonb,
+--   'Import Guide',
+--   '10 min read',
+--   TRUE,
+--   TRUE,
+--   NOW()
+-- );
+--
+-- FIELD NOTES:
+--   - slug: URL-friendly identifier, lowercase with hyphens
+--   - content: Full article in Markdown format
+--   - faq: JSON array of {question, answer} objects (required; use [] if none)
+--   - is_featured: TRUE to show in featured section
+--   - is_published: TRUE to make it visible on the website
+--
 -- CONTENT FORMAT (Markdown):
--- 
+--
 -- ## Main Section Heading (H2)
--- 
+--
 -- Regular paragraph text goes here.
--- 
+--
 -- ### Sub-section Heading (H3)
--- 
+--
 -- More paragraph text.
--- 
+--
 -- - Bullet point 1
 -- - Bullet point 2
--- - Bullet point 3
--- 
+--
+-- FAQ FORMAT (JSON):
+--
+-- [
+--   {"question": "Question text?", "answer": "Plain-text answer."},
+--   {"question": "Another question?", "answer": "Another answer."}
+-- ]
+--
 -- ============================================

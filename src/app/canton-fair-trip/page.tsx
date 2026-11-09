@@ -11,6 +11,12 @@ import { GroupSizeUSP } from "@/components/china-trip/GroupSizeUSP";
 import { FinalCTASection } from "@/components/china-trip/FinalCTASection";
 import { Disclaimers } from "@/components/china-trip/Disclaimers";
 import { MobileWhatsAppButton } from "@/components/china-trip/MobileWhatsAppButton";
+import {
+  generateBreadcrumbSchema,
+  generateWebPageSchema,
+  generateServiceSchema,
+} from "@/lib/structured-data";
+import { LocalBusinessSchema } from "@/components/seo/LocalBusinessSchema";
 
 export const metadata: Metadata = {
   title: "Canton Fair Import Learning Trip | ImportNow",
@@ -38,9 +44,59 @@ export const metadata: Metadata = {
 
 export default function CantonFairTripPage() {
   const whatsappLink = "https://wa.me/919989724320?text=Interested%20in%20the%20Canton%20Fair";
-  
+  const baseUrl = "https://importnow.in";
+  const pageUrl = `${baseUrl}/canton-fair-trip`;
+
+  // Breadcrumb structured data
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Home", url: baseUrl },
+    { name: "Canton Fair Trip", url: pageUrl },
+  ]);
+
+  // WebPage structured data
+  const webPageSchema = generateWebPageSchema({
+    name: "Canton Fair Import Learning Trip | ImportNow",
+    description:
+      "Join a serious, practical learning trip to China for importers. Visit Canton Fair, Shenzhen electronics markets, and factories. Built for business, not tourism.",
+    url: pageUrl,
+    breadcrumb: [
+      { name: "Home", url: baseUrl },
+      { name: "Canton Fair Trip", url: pageUrl },
+    ],
+  });
+
+  // Service structured data
+  const serviceSchema = generateServiceSchema(
+    "Canton Fair Import Learning Trip",
+    "Guided trip to Canton Fair with factory visits, Shenzhen electronics market tour, and sourcing support.",
+    pageUrl,
+    "ImportNow",
+    "Trade Fair Trip",
+    "India"
+  );
+
   return (
     <>
+      {/* Structured Data */}
+      <LocalBusinessSchema />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(webPageSchema),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(serviceSchema),
+        }}
+      />
       <ChinaTripHero whatsappLink={whatsappLink} />
       <WhoThisTripIsFor />
       <WhyThisTripExists />

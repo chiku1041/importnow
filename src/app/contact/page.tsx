@@ -1,32 +1,34 @@
 import { Metadata } from "next";
 import { Mail, Phone, MapPin, MessageCircle, Clock } from "lucide-react";
 import { ContactForm } from "@/components/contact/ContactForm";
+import { GoogleMapEmbed } from "@/components/common/GoogleMapEmbed";
 import {
   generateWebPageSchema,
   generateBreadcrumbSchema,
 } from "@/lib/structured-data";
+import { LocalBusinessSchema } from "@/components/seo/LocalBusinessSchema";
 
 export const metadata: Metadata = {
-  title: "Contact Us - Get Free Quote | ImportNow",
+  title: "Contact ImportNow — Import Export Consultant in Hyderabad",
   description:
-    "Get in touch with ImportNow for a free quote on China to India imports. We're here to answer your questions and help you get started.",
+    "Reach ImportNow for a free import consultation. Office in Hyderabad, with sourcing teams in Shenzhen, Guangzhou, Yiwu, and Shanghai. Call +91 9989724320.",
   keywords: [
     "contact ImportNow",
     "free quote import",
     "China import consultation",
   ],
   openGraph: {
-    title: "Contact Us - ImportNow",
+    title: "Contact ImportNow — Import Export Consultant in Hyderabad",
     description:
-      "Get in touch with ImportNow for a free quote on China to India imports. We're here to answer your questions and help you get started.",
+      "Reach ImportNow for a free import consultation. Office in Hyderabad, with sourcing teams in Shenzhen, Guangzhou, Yiwu, and Shanghai. Call +91 9989724320.",
     url: "https://importnow.in/contact",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Contact Us - ImportNow",
+    title: "Contact ImportNow — Import Export Consultant in Hyderabad",
     description:
-      "Get in touch with ImportNow for a free quote on China to India imports.",
+      "Reach ImportNow for a free import consultation. Office in Hyderabad, with sourcing teams in Shenzhen, Guangzhou, Yiwu, and Shanghai. Call +91 9989724320.",
   },
   alternates: {
     canonical: "https://importnow.in/contact",
@@ -37,19 +39,19 @@ const contactInfo = [
   {
     icon: Mail,
     title: "Email",
-    content: "info@importnow.in",
-    link: "mailto:info@importnow.in",
+    content: "hello@Importnow.in",
+    link: "mailto:hello@Importnow.in",
   },
   {
     icon: Phone,
     title: "Phone",
-    content: "9989724320",
+    content: "+91 9989724320",
     link: "tel:+919989724320",
   },
   {
     icon: MapPin,
     title: "Location",
-    content: "Hyderabad and Delhi, India",
+    content: "Hyderabad, India",
     link: null,
   },
   {
@@ -67,24 +69,25 @@ export default function ContactPage() {
   // Breadcrumb structured data
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: "Home", url: baseUrl },
-    { name: "Contact Us", url: pageUrl },
+    { name: "Contact", url: pageUrl },
   ]);
 
   // WebPage structured data
   const webPageSchema = generateWebPageSchema({
-    name: "Contact Us - ImportNow",
+    name: "Contact ImportNow — Import Export Consultant in Hyderabad",
     description:
-      "Get in touch with ImportNow for a free quote on China to India imports.",
+      "Reach ImportNow for a free import consultation. Office in Hyderabad, with sourcing teams in Shenzhen, Guangzhou, Yiwu, and Shanghai. Call +91 9989724320.",
     url: pageUrl,
     breadcrumb: [
       { name: "Home", url: baseUrl },
-      { name: "Contact Us", url: pageUrl },
+      { name: "Contact", url: pageUrl },
     ],
   });
 
   return (
     <>
       {/* Structured Data */}
+      <LocalBusinessSchema />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -118,12 +121,12 @@ export default function ContactPage() {
             </div>
 
             <h1 className="text-4xl md:text-5xl font-bold text-[#1F2933] mb-6">
-              Let&apos;s <span className="text-[#0B1F33]">Partner Up</span>
+              Get in Touch — <span className="text-[#0B1F33]">Hyderabad Office</span>
             </h1>
 
             <p className="text-xl text-[#666666]">
               Ready to simplify your imports? Get in touch for a free consultation 
-              and custom quote tailored to your needs.
+              and custom quote tailored to your needs. Our import export consultant team is based in Hyderabad, with sourcing teams across China.
             </p>
           </div>
         </div>
@@ -225,18 +228,20 @@ export default function ContactPage() {
         <div className="container-custom">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-2xl font-bold text-[#1F2933] mb-4">
-              Our Presence
+              Visit Our Office
             </h2>
             <p className="text-[#666666] mb-8">
-              With teams in India and China, we&apos;re positioned to serve you across 
-              the entire import journey.
+              With teams in India and China, we&apos;re positioned to serve you across
+              the entire import journey. Find our Hyderabad office on the map below.
             </p>
+
+            <GoogleMapEmbed className="h-[350px] md:h-[450px] mb-8 shadow-lg" />
 
             <div className="grid md:grid-cols-2 gap-6">
               <div className="bg-[#F5F7FA] rounded-xl p-8 text-center">
                 <span className="text-5xl mb-4 block">🇮🇳</span>
                 <h3 className="text-xl font-semibold text-[#1F2933] mb-2">India Office</h3>
-                <p className="text-[#666666]">Hyderabad and Delhi</p>
+                <p className="text-[#666666]">Hyderabad</p>
                 <p className="text-sm text-[#888888] mt-2">
                   Customs & logistics coordination
                 </p>

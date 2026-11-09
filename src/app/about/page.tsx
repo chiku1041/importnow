@@ -7,11 +7,12 @@ import {
   generateWebPageSchema,
   generateBreadcrumbSchema,
 } from "@/lib/structured-data";
+import { LocalBusinessSchema } from "@/components/seo/LocalBusinessSchema";
 
 export const metadata: Metadata = {
-  title: "About Us - ImportNow | China to India Import Experts",
+  title: "About ImportNow — Hyderabad Import Consultants with Teams in China",
   description:
-    "Learn about ImportNow - your reliable partner for China to India imports with 5+ years of experience, 1000+ manufacturer relationships, and on-ground presence in China.",
+    "ImportNow is an import consulting firm based in Hyderabad with on-ground teams in Shenzhen, Guangzhou, Yiwu, and Shanghai. 5+ years experience, 1000+ manufacturer relationships.",
   keywords: [
     "about ImportNow",
     "China import company",
@@ -19,17 +20,17 @@ export const metadata: Metadata = {
     "sourcing company",
   ],
   openGraph: {
-    title: "About Us - ImportNow",
+    title: "About ImportNow — Hyderabad Import Consultants with Teams in China",
     description:
-      "Learn about ImportNow - your reliable partner for China to India imports with 5+ years of experience, 1000+ manufacturer relationships, and on-ground presence in China.",
+      "ImportNow is an import consulting firm based in Hyderabad with on-ground teams in Shenzhen, Guangzhou, Yiwu, and Shanghai. 5+ years experience, 1000+ manufacturer relationships.",
     url: "https://importnow.in/about",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "About Us - ImportNow",
+    title: "About ImportNow — Hyderabad Import Consultants with Teams in China",
     description:
-      "Learn about ImportNow - your reliable partner for China to India imports with 5+ years of experience, 1000+ manufacturer relationships, and on-ground presence in China.",
+      "ImportNow is an import consulting firm based in Hyderabad with on-ground teams in Shenzhen, Guangzhou, Yiwu, and Shanghai. 5+ years experience, 1000+ manufacturer relationships.",
   },
   alternates: {
     canonical: "https://importnow.in/about",
@@ -102,9 +103,9 @@ export default function AboutPage() {
 
   // WebPage structured data
   const webPageSchema = generateWebPageSchema({
-    name: "About Us - ImportNow",
+    name: "About ImportNow — Hyderabad Import Consultants with Teams in China",
     description:
-      "Learn about ImportNow - your reliable partner for China to India imports with 5+ years of experience, 1000+ manufacturer relationships, and on-ground presence in China.",
+      "ImportNow is an import consulting firm based in Hyderabad with on-ground teams in Shenzhen, Guangzhou, Yiwu, and Shanghai. 5+ years experience, 1000+ manufacturer relationships.",
     url: pageUrl,
     breadcrumb: [
       { name: "Home", url: baseUrl },
@@ -115,6 +116,7 @@ export default function AboutPage() {
   return (
     <>
       {/* Structured Data */}
+      <LocalBusinessSchema />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -187,19 +189,21 @@ export default function AboutPage() {
               
               <div className="space-y-4 text-[#666666]">
                 <p>
-                  ImportNow was born from a simple observation: Indian businesses 
+                  Started in Hyderabad, ImportNow was born from a simple observation: Indian businesses 
                   deserve better than the chaos of traditional importing. Too many 
                   entrepreneurs waste time and money dealing with unreliable suppliers, 
                   hidden costs, and endless operational headaches.
                 </p>
                 <p>
+                  What started as import consulting has grown into a full end-to-end import operation. 
                   With over 5 years of hands-on experience in China-India trade, 
-                  we&apos;ve built a network and system that eliminates these pain points. 
+                  we&apos;ve built direct relationships with 1000+ manufacturers across China. 
                   We&apos;re not just another sourcing agent — we&apos;re your dedicated partner, 
                   invested in your success from first contact to final delivery.
                 </p>
                 <p>
-                  Our on-ground presence in China, combined with deep expertise in 
+                  Based in Hyderabad, our on-ground presence in China 
+                  (Shenzhen, Guangzhou, Yiwu, and Shanghai), combined with deep expertise in 
                   Indian customs and logistics, means you get reliable, transparent, 
                   and efficient imports every time.
                 </p>
@@ -396,6 +400,11 @@ export default function AboutPage() {
             <p className="text-xl text-white/90 mb-8">
               Let&apos;s discuss how ImportNow can simplify your China imports
             </p>
+            <div className="mb-8 text-white/90">
+              <p className="mb-2"><strong>Phone:</strong> <a href="tel:+919989724320" className="underline">+91 9989724320</a></p>
+              <p className="mb-2"><strong>Email:</strong> <a href="mailto:hello@Importnow.in" className="underline">hello@Importnow.in</a></p>
+              <p><strong>Offices:</strong> Hyderabad, India | Shenzhen, Guangzhou, Yiwu & Shanghai, China</p>
+            </div>
             <Button
               size="lg"
               className="bg-white text-[#0B1F33] hover:bg-[#F5F7FA]"

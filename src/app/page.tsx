@@ -1,22 +1,28 @@
 import { HeroSection } from "@/components/home/HeroSection";
 import { CommitmentSection } from "@/components/home/CommitmentSection";
+import { HyderabadSection } from "@/components/home/HyderabadSection";
 import { WhyDifferentSection } from "@/components/home/WhyDifferentSection";
 import { PartnersSection } from "@/components/home/PartnersSection";
 import { OurServicesSection } from "@/components/home/OurServicesSection";
 import { ExperienceSection } from "@/components/home/ExperienceSection";
 import { GallerySection } from "@/components/home/GallerySection";
 import { OnePriceSection } from "@/components/home/OnePriceSection";
+import { ContactInfoSection } from "@/components/home/ContactInfoSection";
 import { CTASection } from "@/components/home/CTASection";
 import { Metadata } from "next";
 import {
   generateOrganizationSchema,
   generateWebsiteSchema,
+  generateBreadcrumbSchema,
+  generateWebPageSchema,
+  generateServiceSchema,
 } from "@/lib/structured-data";
+import { LocalBusinessSchema } from "@/components/seo/LocalBusinessSchema";
 
 export const metadata: Metadata = {
-  title: "ImportNow | End-to-End Import & Supply Chain Partner for Indian Businesses",
+  title: "ImportNow | Import Export Consultant in Hyderabad — China to India Imports",
   description:
-    "ImportNow supports startups, SMEs, and growing brands with sourcing, supply chain, customs clearance, and complete import execution into India.",
+    "ImportNow is a Hyderabad-based import export consultant helping Indian businesses source products from China. Product sourcing, quality inspection, customs clearance, logistics, and brand building.",
   keywords: [
     "China to India import",
     "product sourcing China",
@@ -30,9 +36,9 @@ export const metadata: Metadata = {
     "import execution India",
   ],
   openGraph: {
-    title: "ImportNow | End-to-End Import & Supply Chain Partner for Indian Businesses",
+    title: "ImportNow | Import Export Consultant in Hyderabad — China to India Imports",
     description:
-      "ImportNow supports startups, SMEs, and growing brands with sourcing, supply chain, customs clearance, and complete import execution into India.",
+      "ImportNow is a Hyderabad-based import export consultant helping Indian businesses source products from China. Product sourcing, quality inspection, customs clearance, logistics, and brand building.",
     url: "https://importnow.in",
     siteName: "ImportNow",
     type: "website",
@@ -40,9 +46,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "ImportNow | End-to-End Import & Supply Chain Partner for Indian Businesses",
+    title: "ImportNow | Import Export Consultant in Hyderabad — China to India Imports",
     description:
-      "ImportNow supports startups, SMEs, and growing brands with sourcing, supply chain, customs clearance, and complete import execution into India.",
+      "ImportNow is a Hyderabad-based import export consultant helping Indian businesses source products from China. Product sourcing, quality inspection, customs clearance, logistics, and brand building.",
   },
   alternates: {
     canonical: "https://importnow.in",
@@ -57,11 +63,11 @@ export default function HomePage() {
     name: "ImportNow",
     url: baseUrl,
     description:
-      "ImportNow supports startups, SMEs, and growing brands with sourcing, supply chain, customs clearance, and complete import execution into India.",
+      "ImportNow is a Hyderabad-based import export consultant helping Indian businesses source products from China. Product sourcing, quality inspection, customs clearance, logistics, and brand building.",
     contactPoint: {
       telephone: "+919989724320",
       contactType: "Customer Service",
-      email: "info@importnow.in",
+      email: "hello@Importnow.in",
     },
     sameAs: [],
   });
@@ -69,9 +75,34 @@ export default function HomePage() {
   // Website structured data with SiteLinksSearchBox
   const websiteSchema = generateWebsiteSchema(baseUrl);
 
+  // Breadcrumb structured data
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Home", url: baseUrl },
+  ]);
+
+  // WebPage structured data
+  const webPageSchema = generateWebPageSchema({
+    name: "ImportNow | Import Export Consultant in Hyderabad — China to India Imports",
+    description:
+      "ImportNow is a Hyderabad-based import export consultant helping Indian businesses source products from China. Product sourcing, quality inspection, customs clearance, logistics, and brand building.",
+    url: baseUrl,
+    breadcrumb: [{ name: "Home", url: baseUrl }],
+  });
+
+  // Service structured data
+  const serviceSchema = generateServiceSchema(
+    "China to India Import Consulting",
+    "End-to-end import consulting from China to India including product sourcing, quality inspection, customs clearance, and logistics.",
+    baseUrl,
+    "ImportNow",
+    "Import Export Consulting",
+    "India"
+  );
+
   return (
     <>
       {/* Structured Data */}
+      <LocalBusinessSchema />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -84,21 +115,41 @@ export default function HomePage() {
           __html: JSON.stringify(websiteSchema),
         }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(webPageSchema),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(serviceSchema),
+        }}
+      />
 
       <HeroSection
-        subtitle="End-to-end China sourcing, quality control, and import execution for Indian businesses."
+        subtitle="ImportNow works as your import consultant and execution partner. End-to-end China sourcing, quality control, and import execution for Indian businesses."
         ctaText="Get Free Quote"
         ctaHref="/contact"
         secondaryCtaText="Explore Services"
         secondaryCtaHref="/services"
       />
       <CommitmentSection />
+      <HyderabadSection />
       <WhyDifferentSection />
       <PartnersSection />
       <OurServicesSection />
       <ExperienceSection />
       <GallerySection />
       <OnePriceSection />
+      <ContactInfoSection />
       <CTASection />
     </>
   );
