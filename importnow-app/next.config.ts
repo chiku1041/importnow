@@ -3,6 +3,8 @@ import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
 
 const nextConfig: NextConfig = {
   images: {
+    // Avoid Cloudflare Images binding (keeps free-plan deploys simpler)
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",
