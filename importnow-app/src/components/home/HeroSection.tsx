@@ -127,7 +127,7 @@ export function HeroSection({
               />
             </div>
             {/* SEO-friendly static H1 for search engines */}
-            <h1 className="sr-only">ImportNow | End-to-End Import & Supply Chain Partner for Indian Businesses</h1>
+            <h1 className="sr-only">ImportNow | Import Export Consultant in Hyderabad — China to India Imports</h1>
             
             {/* Visual H1 for users */}
             <div className="font-black text-black leading-tight tracking-tight" role="presentation" aria-hidden="true">

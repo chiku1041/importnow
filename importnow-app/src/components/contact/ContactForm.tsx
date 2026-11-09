@@ -161,7 +161,7 @@ export function ContactForm() {
           <Input
             id="phone"
             type="tel"
-            placeholder="9989724320"
+            placeholder="+91 9989724320"
             {...register("phone")}
           />
         </div>

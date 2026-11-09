@@ -4,6 +4,7 @@ import {
   generateWebPageSchema,
   generateBreadcrumbSchema,
 } from "@/lib/structured-data";
+import { LocalBusinessSchema } from "@/components/seo/LocalBusinessSchema";
 
 export const metadata: Metadata = {
   title: "Privacy Policy - ImportNow",
@@ -53,6 +54,7 @@ export default function PrivacyPage() {
   return (
     <>
       {/* Structured Data */}
+      <LocalBusinessSchema />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -188,9 +190,9 @@ export default function PrivacyPage() {
                 If you have any questions about this Privacy Policy, please contact us at:
               </p>
               <ul className="list-none text-[#666666] mt-4 space-y-2">
-                <li>Email: <a href="mailto:info@importnow.in" className="text-[#0B1F33] hover:underline">info@importnow.in</a></li>
-                <li>Phone: 9989724320</li>
-                <li>Address: Hyderabad and Delhi, India</li>
+                <li>Email: <a href="mailto:hello@Importnow.in" className="text-[#0B1F33] hover:underline">hello@Importnow.in</a></li>
+                <li>Phone: <a href="tel:+919989724320" className="text-[#0B1F33] hover:underline">+91 9989724320</a></li>
+                <li>Address: Hyderabad, India</li>
               </ul>
             </div>
           </div>

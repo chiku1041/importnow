@@ -1,36 +1,62 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ImportNow
 
-## Getting Started
+Next.js App Router site for [importnow.in](https://importnow.in), deployed on **Cloudflare Workers** via `@opennextjs/cloudflare`.
 
-First, run the development server:
+## Local development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Create `.env.local` with:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+NEXT_PUBLIC_SUPABASE_URL=your-project-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Deploy to Cloudflare (free Workers plan)
 
-## Learn More
+OpenNext warns that local builds on Windows can be flaky. Prefer **Cloudflare Git builds** (Linux) for production; use WSL or `npm run deploy` only if that works on your machine.
 
-To learn more about Next.js, take a look at the following resources:
+### Recommended: Git-connected deploy
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Push this repo to GitHub/GitLab.
+2. In [Cloudflare Dashboard](https://dash.cloudflare.com) → **Workers & Pages** → **Create** → connect the repo.
+3. Configure:
+   - **Build command:** `npx opennextjs-cloudflare build`
+   - **Deploy command:** `npx opennextjs-cloudflare deploy`
+   - **Environment variables:** `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+4. Deploy. You get a `*.workers.dev` URL first.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Alternative: CLI deploy from this machine
 
-## Deploy on Vercel
+```bash
+npx wrangler login
+npm run deploy
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+`NEXT_PUBLIC_*` values are baked in at **build** time. They are read from `.env.local` / `.env.production` (gitignored), or from the shell / Cloudflare build env.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Attach your domain (`importnow.in`)
+
+1. Add the domain in Cloudflare (or move DNS to Cloudflare if it is elsewhere).
+2. In **Workers & Pages → importnow-app → Settings → Domains & Routes**, add `importnow.in` and `www.importnow.in`.
+3. Point DNS as Cloudflare instructs.
+4. After DNS cuts over, remove or pause the old Vercel project so it is not serving traffic.
+
+### Useful scripts
+
+| Script | Purpose |
+| --- | --- |
+| `npm run dev` | Local Next.js dev server |
+| `npm run preview` | Build and run in the Workers runtime locally |
+| `npm run deploy` | Build and deploy to Cloudflare |
+| `npm run cf-typegen` | Generate Cloudflare binding types |
+
+## Notes
+
+- Image optimization uses the Cloudflare `IMAGES` binding (configured in `wrangler.jsonc`).
+- Google Analytics remains in `src/app/layout.tsx`; Vercel Analytics was removed.
+- Keep using `next dev --webpack` on Windows (Turbopack can crash with exit code 3221225501).

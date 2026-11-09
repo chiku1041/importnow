@@ -7,11 +7,12 @@ import {
   generateWebPageSchema,
   generateBreadcrumbSchema,
 } from "@/lib/structured-data";
+import { LocalBusinessSchema } from "@/components/seo/LocalBusinessSchema";
 
 export const metadata: Metadata = {
-  title: "Shipping Policy - ImportNow",
+  title: "Shipping Policy — China to India Import Timelines | ImportNow",
   description:
-    "ImportNow's shipping policy - timelines, costs, tracking, and delivery information for China to India imports.",
+    "ImportNow shipping timelines and methods for China to India imports. Sea freight, air freight, and express courier options with tracking.",
   keywords: [
     "shipping policy",
     "China to India shipping",
@@ -19,17 +20,17 @@ export const metadata: Metadata = {
     "delivery timeline",
   ],
   openGraph: {
-    title: "Shipping Policy - ImportNow",
+    title: "Shipping Policy — China to India Import Timelines | ImportNow",
     description:
-      "ImportNow's shipping policy - timelines, costs, tracking, and delivery information for China to India imports.",
+      "ImportNow shipping timelines and methods for China to India imports. Sea freight, air freight, and express courier options with tracking.",
     url: "https://importnow.in/shipping",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Shipping Policy - ImportNow",
+    title: "Shipping Policy — China to India Import Timelines | ImportNow",
     description:
-      "ImportNow's shipping policy - timelines, costs, tracking, and delivery information.",
+      "ImportNow shipping timelines and methods for China to India imports. Sea freight, air freight, and express courier options with tracking.",
   },
   alternates: {
     canonical: "https://importnow.in/shipping",
@@ -72,9 +73,9 @@ export default function ShippingPage() {
 
   // WebPage structured data
   const webPageSchema = generateWebPageSchema({
-    name: "Shipping Policy - ImportNow",
+    name: "Shipping Policy — China to India Import Timelines | ImportNow",
     description:
-      "ImportNow's shipping policy - timelines, costs, tracking, and delivery information for China to India imports.",
+      "ImportNow shipping timelines and methods for China to India imports. Sea freight, air freight, and express courier options with tracking.",
     url: pageUrl,
     breadcrumb: [
       { name: "Home", url: baseUrl },
@@ -85,6 +86,7 @@ export default function ShippingPage() {
   return (
     <>
       {/* Structured Data */}
+      <LocalBusinessSchema />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
